@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { FaUniversity } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import BlueLineOnBorder from "./BlueLineOnBorder";
@@ -19,6 +19,11 @@ function Application() {
 
   const [focus3, setFocus3] = useState(false);
   const [focusValue3, setFocusValue3] = useState("");
+
+  const ref1 = useRef(null)
+  const ref2 = useRef(null)
+
+  
 
   const [focus4, setFocus4] = useState(false);
   const [focusValue4, setFocusValue4] = useState("");
@@ -53,14 +58,29 @@ function Application() {
 
     //  if(!focus3 === true && !e.target.value) setFocus3(true) 
     //  else  setFocus3(false) 
-    setFocus3(v => !v)
+    //setFocus3(v => !v)
+
+    if(!focus3) setFocus3(true)
+    
+
+    //console.log(e.target.type)
    
      
   }
 
+  let test = false
+
+  function updateBorder3ToFalse(e:any){
+   
+    if(focus3 && e?.target?.type !== 'radio' ) 
+    setFocus3(false)
+    
+    
+  }
+
   function value3(e:any){
     setFocusValue3(e.target.value)
-    //console.log(e.target.value)
+    
   }
   
 
@@ -95,7 +115,9 @@ function Application() {
 
 
   return (
-    <div className="   w-screen  h-fit flex justify-center items-center bg-stone-100">
+    <div className="   w-screen  h-fit flex justify-center items-center bg-stone-100"
+    onClick={updateBorder3ToFalse}
+    >
 
         <div className="  md:w-[35dvw] bg-white ">
             <div>
@@ -182,33 +204,33 @@ function Application() {
 
 
                             <div className="mt-8  ">
-                              <p>Choose your Admission Type</p>
+                              <p className="text-stone-400">Choose your Admission Type</p>
                               
-                              <div className="flex space-x-4 border-2 border-solid border-red-500">
+                              <div className="flex space-x-4 border-b-2  border-stone-400 p-2">
 
                                 <div className="flex items-center space-x-1">
 
-                                  <input id="general" type="radio" name="admissionType" 
+                                  <input  id="general" type="radio" name="admissionType" 
                                   className="p-[0.1rem] appearance-none border-2 border-solid border-stone-400 w-[0.8rem] h-[0.8rem] rounded-[50%] checked:after:block  after:bg-[#0293DB] after:h-full after:w-full after:rounded-[50%]"
                                   onChange={value3}
                                   onFocus={updateBorder3}
-                                  onBlur={updateBorder3}
+                                  //onBlur={updateBorder3ToFalse}
 
                                   />
 
-                                  <label htmlFor="general">General Admission</label>
+                                  <label className="text-stone-400" htmlFor="general">General Admission</label>
 
                                 </div>
 
                                 <div className="flex items-center space-x-1">
                                   
-                                  <input id="entrance" type="radio" name="admissionType" className="p-[0.1rem] appearance-none border-2 border-solid border-stone-400 w-[0.8rem] h-[0.8rem] rounded-[50%] checked:after:block  after:bg-[#0293DB] after:h-full after:w-full after:rounded-[50%] " 
+                                  <input  id="entrance" type="radio" name="admissionType" className="p-[0.1rem] appearance-none border-2 border-solid border-stone-400 w-[0.8rem] h-[0.8rem] rounded-[50%] checked:after:block  after:bg-[#0293DB] after:h-full after:w-full after:rounded-[50%] " 
                                   onChange={value3}
                                   onFocus={updateBorder3}
-                                  onBlur={updateBorder3}
+                                  //onBlur={updateBorder3ToFalse}
                                   />
 
-                                  <label htmlFor="entrance">Entrance Exam</label>
+                                  <label className="text-stone-400" htmlFor="entrance">Entrance Exam</label>
 
                                 </div>
 
