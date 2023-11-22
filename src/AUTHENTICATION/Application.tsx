@@ -1,16 +1,41 @@
 "use client";
 
-import Image from "next/image";
+import ApplyHeader from "./ApplyHeader"
 import { useState, useRef } from "react";
 import { FaUniversity } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import BlueLineOnBorder from "./BlueLineOnBorder";
+import { useForm } from "react-hook-form";
+
+enum admissionType {
+  general ="general",
+  entrance = "entrance"
+}
+
+interface formLabels {
+
+  name:string
+  dateOfBirth:string
+  admission: admissionType
+  email:string
+  password:string
+  confirmPassword:string
 
 
+}
 
 
 
 function Application() {
+
+  const { register, handleSubmit } = useForm<formLabels>()
+
+  function onSubmit({data}:{data:formLabels}){
+    console.log(data)
+  }
+
+
+
   const [focus, setFocus] = useState(false);
   const [focusValue, setFocusValue] = useState("");
 
@@ -68,7 +93,7 @@ function Application() {
      
   }
 
-  let test = false
+  
 
   function updateBorder3ToFalse(e:any){
    
@@ -121,29 +146,7 @@ function Application() {
 
         <div className="  md:w-[35dvw] bg-white ">
             <div>
-                <div className="relative  mb-[4.5rem] md:mb-[2.3rem]">
-
-                    <div className="pt-4 px-4 pb-12   bg-[#0293DB]  space-y-4 ">
-                        <div className=" h-fit w-full  flex md:justify-center">
-                            <div className="relative h-[5rem] w-[5rem] ">
-                            <Image src={"/logo.png"} alt="logo" fill />
-                            </div>
-                        </div>
-
-                        <div >
-                            <h1 className="text-center font-serif font-semibold text-white">
-                            University of Zustaland
-                            </h1>
-                            <p className="md:text-center  text-white font-light">
-                            Apply for Admission into the University of Zustaland
-                            </p>
-                        </div>
-                    </div>
-
-
-                    
-                
-                </div>
+                <ApplyHeader/>
 
 
                 <div className="  px-4 ">
