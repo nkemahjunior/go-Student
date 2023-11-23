@@ -2,10 +2,9 @@
 
 import ApplyHeader from "./ApplyHeader"
 import { useState, useRef } from "react";
-import { FaUniversity } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
+
 import BlueLineOnBorder from "./BlueLineOnBorder";
-import { useForm } from "react-hook-form";
+import { useForm,SubmitHandler } from "react-hook-form";
 
 enum admissionType {
   general ="general",
@@ -14,7 +13,7 @@ enum admissionType {
 
 interface formLabels {
 
-  name:string
+  names:string
   dateOfBirth:string
   admission: admissionType
   email:string
@@ -28,12 +27,17 @@ interface formLabels {
 
 function Application() {
 
-  const { register, handleSubmit } = useForm<formLabels>()
+  const { register,formState: { errors }, handleSubmit } = useForm<formLabels>()
 
-  function onSubmit({data}:{data:formLabels}){
-    console.log(data)
-  }
+  const onSubmit: SubmitHandler<formLabels> = (data) => console.log(data)
 
+  // function onSubmit(data):SubmitHandler<formLabels>{
+  //   console.log(data)
+  //   return data;
+  // }
+
+  const [passwordMatch1, setPasswordMatch1] = useState("")
+  const [passwordMatch2, setPasswordMatch2] = useState("")
 
 
   const [focus, setFocus] = useState(false);
@@ -45,8 +49,7 @@ function Application() {
   const [focus3, setFocus3] = useState(false);
   const [focusValue3, setFocusValue3] = useState("");
 
-  const ref1 = useRef(null)
-  const ref2 = useRef(null)
+
 
   
 
@@ -105,6 +108,8 @@ function Application() {
 
   function value3(e:any){
     setFocusValue3(e.target.value)
+    console.log("bbbbbbbbbbbbbbbbbbbbb")
+    console.log(e.target.value)
     
   }
   
@@ -136,6 +141,10 @@ function Application() {
   }
 
 
+  function confirmPassword(e:any){
+
+  }
+
   
 
 
@@ -150,7 +159,7 @@ function Application() {
 
 
                 <div className="  px-4 ">
-                    <form action="" className=" space-y-4">
+                    <form action="" className=" space-y-4" onSubmit={handleSubmit(onSubmit)}>
                         <div className="space-y-6">
                         
                             <div>
@@ -163,16 +172,32 @@ function Application() {
                                 </label> 
 
                                 <input
-                                onChange={value1} 
+                                
+                                
                                 type="text"
                                 onFocus={updateBorder}
-                                onBlur={updateBorder}
+                               
+                                {...register("names",{
+                                  pattern: /^[A-Za-z0-9" "]+$/i,
+                                  required:true,
+                                  maxLength:30,
+                                  
+                                  onChange:value1,
+                                  onBlur:updateBorder
+                                })}
                                 className={` p-2 outline-none w-full font-light 
                                                 border-solid border-b-2 border-stone-400  transition-colors duration-[0.5s]     `}
                                 
                                 />
 
                                 <BlueLineOnBorder focus={focus}/>
+
+                                { errors.names?.type === "required" && (
+                                    <p role="alert" className='text-red-500'> name is required</p>
+                                )}
+                                { errors.names?.type === "pattern" && (
+                                    <p role="alert" className='text-red-500'> name can include only letters</p>
+                                )}
 
                             </div> 
 
@@ -190,15 +215,24 @@ function Application() {
 
                                 <input 
                                 type="date"
-                                onChange={value2}
+                                
                                 onFocus={updateBorder2}
-                                onBlur={updateBorder2}
+                                
+                                {...register("dateOfBirth",{
+                                  required:true,
+                                  onChange:value2,
+                                  onBlur:updateBorder2
+                                })}
                                 className={`p-2 outline-none w-full font-light 
                                 border-solid border-b-2 border-stone-400  transition-colors duration-[0.5s]     `}
                                 
                                 />
 
                                 <BlueLineOnBorder focus={focus2}/>
+
+                                { errors.dateOfBirth?.type === "required" && (
+                                    <p role="alert" className='text-red-500'> date of birth is required</p>
+                                )}
 
                             </div>
 
@@ -213,10 +247,17 @@ function Application() {
 
                                 <div className="flex items-center space-x-1">
 
-                                  <input  id="general" type="radio" name="admissionType" 
+                                  <input 
+                                  id="general" type="radio" value={"general"}
                                   className="p-[0.1rem] appearance-none border-2 border-solid border-stone-400 w-[0.8rem] h-[0.8rem] rounded-[50%] checked:after:block  after:bg-[#0293DB] after:h-full after:w-full after:rounded-[50%]"
-                                  onChange={value3}
+                                  
                                   onFocus={updateBorder3}
+                                  {...register("admission",{
+                                    required:true,
+                                    onChange:value3
+                                    
+                                    
+                                  })} 
                                   //onBlur={updateBorder3ToFalse}
 
                                   />
@@ -227,9 +268,15 @@ function Application() {
 
                                 <div className="flex items-center space-x-1">
                                   
-                                  <input  id="entrance" type="radio" name="admissionType" className="p-[0.1rem] appearance-none border-2 border-solid border-stone-400 w-[0.8rem] h-[0.8rem] rounded-[50%] checked:after:block  after:bg-[#0293DB] after:h-full after:w-full after:rounded-[50%] " 
-                                  onChange={value3}
-                                  onFocus={updateBorder3}
+                                  <input 
+                                   id="entrance" type="radio"  className="p-[0.1rem] appearance-none border-2 border-solid border-stone-400 w-[0.8rem] h-[0.8rem] rounded-[50%] checked:after:block  after:bg-[#0293DB] after:h-full after:w-full after:rounded-[50%] " value={"entrance"}
+                                  
+                                   onFocus={updateBorder3}
+                                   {...register("admission",{
+                                    required:true,
+                                    onChange:value3
+                                    
+                                  })}
                                   //onBlur={updateBorder3ToFalse}
                                   />
 
@@ -239,6 +286,10 @@ function Application() {
 
                               </div>
                               <BlueLineOnBorder focus={focus3}/>
+
+                              { errors.admission?.type === "required" && (
+                                    <p role="alert" className='text-red-500'> please choose admission type</p>
+                                )}
 
                             </div>
 
@@ -258,15 +309,24 @@ function Application() {
 
                                 <input 
                                 type="email"
-                                onChange={value4}
                                 onFocus={updateBorder4}
-                                onBlur={updateBorder4}
+                                
+                                {...register("email",{
+                                  required:true,
+                                  maxLength:40,
+                                  onChange:value4,
+                                  onBlur:updateBorder4
+                                })}
                                 className={`p-2 outline-none w-full font-light 
                                 border-solid border-b-2 border-stone-400  transition-colors duration-[0.5s]     `}
                                 
                                 />
 
                                 <BlueLineOnBorder focus={focus4}/>
+
+                                { errors.email?.type === "required" && (
+                                    <p role="alert" className='text-red-500'> email is required</p>
+                                )}
 
                             </div>
 
@@ -286,11 +346,17 @@ function Application() {
 
                                 <input 
                                 type="password"
-                                onChange={value5}
                                 onFocus={updateBorder5}
-                                onBlur={updateBorder5}
                                 className={`p-2 outline-none w-full font-light 
                                 border-solid border-b-2 border-stone-400  transition-colors duration-[0.5s]     `}
+                                {...register("password",{
+                                  required:true,
+                                  pattern: /^[A-Za-z0-9]+$/i,
+                                  minLength:8,
+                                  maxLength:30,
+                                  onChange:value5,
+                                  onBlur:updateBorder5
+                                })}
                                 
                                 />
 
@@ -314,15 +380,30 @@ function Application() {
 
                                 <input 
                                 type="password"
-                                onChange={value6}
+                                
                                 onFocus={updateBorder6}
-                                onBlur={updateBorder6}
+                                
                                 className={`p-2 outline-none w-full font-light 
                                 border-solid border-b-2 border-stone-400  transition-colors duration-[0.5s]     " type="text"`}
+                                {...register("confirmPassword",{
+                                  required:true,
+                                  pattern: /^[A-Za-z0-9]+$/i,
+                                  minLength:8,
+                                  maxLength:30,
+                                  onChange:value6,
+                                  onBlur:updateBorder6
+                                })}
                                 
                                 />
 
                                 <BlueLineOnBorder focus={focus6}/>
+
+                                { errors.password?.type === "required" && (
+                                    <p role="alert" className='text-red-500'> password is required</p>
+                                )}
+                                { errors.password?.type === "min" && (
+                                    <p role="alert" className='text-red-500'> password should not be less than 8</p>
+                                )}
 
                             </div>
 
@@ -334,7 +415,7 @@ function Application() {
 
                     <div className="flex justify-between mt-4 space-x-2 md:space-x-6">
                         <p className=" text-green-600 font-light">Already have an account?</p>
-                        <p className="text-red-600 font-light">Forgot password?</p>
+                        <p className="text-red-500 font-light">Forgot password?</p>
                         <p className=" text-green-600 font-light">Live chat support</p>
                     </div>
                 </div>
