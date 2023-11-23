@@ -38,6 +38,8 @@ function Application() {
 
   const [passwordMatch1, setPasswordMatch1] = useState("")
   const [passwordMatch2, setPasswordMatch2] = useState("")
+  const [passwordDontMatch,setPasswordDontMatch] = useState(false)
+  const [passwordDontMatch2,setPasswordDontMatch2] = useState(false)
 
 
   const [focus, setFocus] = useState(false);
@@ -108,8 +110,7 @@ function Application() {
 
   function value3(e:any){
     setFocusValue3(e.target.value)
-    console.log("bbbbbbbbbbbbbbbbbbbbb")
-    console.log(e.target.value)
+   
     
   }
   
@@ -129,6 +130,16 @@ function Application() {
 
   function value5(e:any){
     setFocusValue5(e.target.value)
+    setPasswordMatch1(e.target.value)
+
+    if(passwordMatch2.length > 0){
+      console.log(passwordMatch2)
+      if(e.target.value !== passwordMatch2){
+        setPasswordDontMatch(true)
+      }else{
+        setPasswordDontMatch(false)
+      }
+    }
   }
 
 
@@ -138,13 +149,25 @@ function Application() {
 
   function value6(e:any){
     setFocusValue6(e.target.value)
+    setPasswordMatch2(e.target.value)
+    //console.log(e.target.value)
+    
+    if(e.target.value !== passwordMatch1 ){
+      setPasswordDontMatch(true)
+    }else{
+      setPasswordDontMatch(false)
+    } 
+
+  }
+
+  function correctPassword():JSX.Element | undefined{
+    if(passwordMatch2.length > 0 ){
+      return <p className='text-green-500'> passwords  match ✔</p>
+    }
   }
 
 
-  function confirmPassword(e:any){
-
-  }
-
+  
   
 
 
@@ -361,6 +384,12 @@ function Application() {
                                 />
 
                                 <BlueLineOnBorder focus={focus5}/>
+                                { errors.password?.type === "required" && (
+                                    <p role="alert" className='text-red-500'> password is required</p>
+                                )}
+                                { errors.password?.type === "minLength" && (
+                                    <p role="alert" className='text-red-500'> password should not be less than 8</p>
+                                )}
 
                             </div>
 
@@ -401,10 +430,13 @@ function Application() {
                                 { errors.password?.type === "required" && (
                                     <p role="alert" className='text-red-500'> password is required</p>
                                 )}
-                                { errors.password?.type === "min" && (
+                                { errors.password?.type === "minLength" && (
                                     <p role="alert" className='text-red-500'> password should not be less than 8</p>
                                 )}
-
+                                
+                                {
+                                  passwordDontMatch ? <p className='text-red-500'> passwords don&apos;t match</p> : correctPassword()
+                                }
                             </div>
 
                         
