@@ -1,13 +1,49 @@
 "use client";
-import Image from "next/image";
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { MdEmail } from "react-icons/md";
-import { FaUniversity } from "react-icons/fa";
 import BlueLineOnBorder from "./BlueLineOnBorder";
+import { useForm } from "react-hook-form";
+import LoginHeader from "./LoginHeader";
+import { ImSpinner8 } from "react-icons/im";
+import toast from "react-hot-toast";
+
+
+interface formLabels {
+    email:string
+    password:string  
+  }
 
 
 function Login() {
+
+    const { register,formState: { errors }, handleSubmit } = useForm<formLabels>()
+
+    const [loading,setLoading] = useState(false)
+
+    async function onSubmit(data:any){
+        try {
+
+           setLoading(true)
+     
+           const res = await fetch(`${location.origin}/auth/login`,{
+           method: 'post',
+           body: JSON.stringify(data)
+           
+          })
+     
+          //console.log(res)
+           if(!res.ok) toast.error("email and or password are wrong")
+     
+     
+         } catch (error) {
+           console.log(error)
+     
+         } finally{
+           setLoading(false)
+         } 
+         
+       }
+
+
   const [focus, setFocus] = useState(false);
   const [focusValue, setFocusValue] = useState("");
 
@@ -39,51 +75,13 @@ function Login() {
 
         <div className="  md:w-[35dvw] bg-white ">
             <div>
-                <div className="relative  mb-[4.5rem] md:mb-[2.3rem]">
-
-                    <div className="pt-4 px-4 pb-12   bg-[#0293DB]  space-y-4 ">
-                        <div className=" h-fit w-full  flex md:justify-center">
-                            <div className="relative h-[5rem] w-[5rem] ">
-                            <Image src={"/logo.png"} alt="logo" fill />
-                            </div>
-                        </div>
-
-                        <div>
-                            <h1 className="text-center font-serif font-semibold text-white">
-                            University of Zustaland
-                            </h1>
-                            <p className="text-white font-light">
-                            Enter your matriculation number and password in the fields below
-                            to sign in
-                            </p>
-                        </div>
-                    </div>
-
-
-                    <div className="md:flex mr-4   absolute right-0 -mt-8   w-fit  ">
-                        <div className="flex  items-center p-2 bg-[#14b8a6] w-fit  space-x-1 md:shadow-md">
-                            <MdEmail  style={{color:"#fff"}}/>
-                            <p className="  text-white "> Credential Verification</p>
-                        </div>
-
-                        <div className="flex justify-end w-full md:flex-none md:justify-normal md:w-fit md:shadow-md">
-                            <div className="flex  items-baseline p-2 bg-[#0293DB] w-fit  space-x-1">
-                                <FaUniversity style={{color:"#fff"}}/>
-                                <p className="  text-white "> Admission</p>
-                            </div>
-                        </div>
-                    </div>
-                
-                </div>
+               <LoginHeader/>
 
 
                 <div className="  px-4 ">
-                    <form action="" className=" space-y-4">
+                    <form action="" className=" space-y-4" onSubmit={handleSubmit(onSubmit)}>
 
-                        <fieldset>
-                            <legend>test</legend>
-                            <input type="text" />
-                        </fieldset>
+                        
 
                         <div className="space-y-6">
                         
@@ -91,22 +89,30 @@ function Login() {
                                 <label
                                 className={`absolute pointer-events-none text-stone-400  mt-0    ${focus || focusValue? " animate-placeholder text-xs  ":" animate-placeholderDown  "}
                                 `}
-                                htmlFor="Matriculation Number"
+                                htmlFor="email"
                                 >
-                                Matriculation Number
+                                Email
                                 </label> 
 
                                 <input
-                                type="text" 
-                                onChange={value1}
+                                type="email" 
                                 onFocus={updateBorder}
-                                onBlur={updateBorder}
+                                {...register("email",{
+                                    required:true,
+                                    maxLength:40,
+                                    onChange:value1,
+                                    onBlur:updateBorder
+                                  })}
                                 className={` p-2 outline-none w-full font-light 
                                                 border-solid border-b-2 border-stone-400  transition-colors duration-[0.5s]     `}
                                 
                                 />
 
-                                <BlueLineOnBorder focus={focus}/>                          
+                                <BlueLineOnBorder focus={focus}/>         
+
+                                 { errors.email?.type === "required" && (
+                                    <p role="alert" className='text-red-500'> email is required</p>
+                                )}                 
 
                             </div> 
 
@@ -122,22 +128,37 @@ function Login() {
 
                                 <input 
                                 type="password"
-                                onChange={value2}
                                 onFocus={updateBorder2}
-                                onBlur={updateBorder2}
+                                {...register("password",{
+                                    required:true,
+                                    pattern: /^[A-Za-z0-9.:,?/-]+$/i,
+                                    minLength:8,
+                                    maxLength:30,
+                                    onChange:value2,
+                                    onBlur:updateBorder2
+                                  })}
                                 className={`p-2 outline-none w-full font-light 
                                 border-solid border-b-2 border-stone-400  transition-colors duration-[0.5s]     `}
                                 
                                 />
 
                                 <BlueLineOnBorder focus={focus2}/>
+                                { errors.password?.type === "required" && (
+                                    <p role="alert" className='text-red-500'> password is required</p>
+                                )}
+                                { errors.password?.type === "minLength" && (
+                                    <p role="alert" className='text-red-500'> password should not be less than 8</p>
+                                )}
+                                { errors.password?.type === "pattern" && (
+                                    <p role="alert" className='text-red-500'> password can not contain that character</p>
+                                )}
 
                             </div>
 
                         
                         </div>
 
-                        <button className="text-center bg-[#0293DB] w-full p-2 text-white shadow-md">Login</button>
+                        <button className="lg:hover:scale-95 bg-[#0293DB] w-full p-2 text-white shadow-md flex justify-center items-center">{loading? "Logging in":"Login"} &nbsp; { loading && <span className=' animate-spin'> <ImSpinner8 /> </span>  }</button>
                     </form>
 
                     <div className="flex justify-between mt-4 space-x-2">

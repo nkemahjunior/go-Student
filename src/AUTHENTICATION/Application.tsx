@@ -4,7 +4,8 @@ import ApplyHeader from "./ApplyHeader"
 import { useState, useRef } from "react";
 
 import BlueLineOnBorder from "./BlueLineOnBorder";
-import { useForm,SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { ImSpinner8 } from "react-icons/im";
 
 enum admissionType {
   general ="general",
@@ -25,21 +26,43 @@ interface formLabels {
 
 
 
-function Application() {
+function Application():JSX.Element {
 
   const { register,formState: { errors }, handleSubmit } = useForm<formLabels>()
 
-  const onSubmit: SubmitHandler<formLabels> = (data) => console.log(data)
+  //const onSubmit: SubmitHandler<formLabels> = (data) => console.log(data)
 
-  // function onSubmit(data):SubmitHandler<formLabels>{
-  //   console.log(data)
-  //   return data;
-  // }
+  const [loading,setLoading] = useState(false)
+
+  async function onSubmit(data:any){
+   try {
+     //console.log(data)
+     if(passwordDontMatch) return;
+
+      setLoading(true)
+
+      const res = await fetch(`${location.origin}/auth/sign-up/`,{
+      method: 'post',
+      body: JSON.stringify(data)
+      
+      })
+
+      //console.log(res)
+
+
+    } catch (error) {
+      console.log(error)
+
+    } finally{
+      setLoading(false)
+    } 
+    
+  }
 
   const [passwordMatch1, setPasswordMatch1] = useState("")
   const [passwordMatch2, setPasswordMatch2] = useState("")
   const [passwordDontMatch,setPasswordDontMatch] = useState(false)
-  const [passwordDontMatch2,setPasswordDontMatch2] = useState(false)
+  
 
 
   const [focus, setFocus] = useState(false);
@@ -85,33 +108,18 @@ function Application() {
   }
 
   function updateBorder3(e:any) {
-
-    //  if(!focus3 === true && !e.target.value) setFocus3(true) 
-    //  else  setFocus3(false) 
-    //setFocus3(v => !v)
-
-    if(!focus3) setFocus3(true)
-    
-
-    //console.log(e.target.type)
-   
-     
+    if(!focus3) setFocus3(true) 
   }
 
   
 
   function updateBorder3ToFalse(e:any){
-   
     if(focus3 && e?.target?.type !== 'radio' ) 
     setFocus3(false)
-    
-    
   }
 
   function value3(e:any){
     setFocusValue3(e.target.value)
-   
-    
   }
   
 
@@ -133,7 +141,7 @@ function Application() {
     setPasswordMatch1(e.target.value)
 
     if(passwordMatch2.length > 0){
-      console.log(passwordMatch2)
+
       if(e.target.value !== passwordMatch2){
         setPasswordDontMatch(true)
       }else{
@@ -182,6 +190,7 @@ function Application() {
 
 
                 <div className="  px-4 ">
+                  
                     <form action="" className=" space-y-4" onSubmit={handleSubmit(onSubmit)}>
                         <div className="space-y-6">
                         
@@ -374,7 +383,7 @@ function Application() {
                                 border-solid border-b-2 border-stone-400  transition-colors duration-[0.5s]     `}
                                 {...register("password",{
                                   required:true,
-                                  pattern: /^[A-Za-z0-9]+$/i,
+                                  pattern: /^[A-Za-z0-9.:,?/-]+$/i,
                                   minLength:8,
                                   maxLength:30,
                                   onChange:value5,
@@ -389,6 +398,9 @@ function Application() {
                                 )}
                                 { errors.password?.type === "minLength" && (
                                     <p role="alert" className='text-red-500'> password should not be less than 8</p>
+                                )}
+                                 { errors.password?.type === "pattern" && (
+                                    <p role="alert" className='text-red-500'> password can not contain that character</p>
                                 )}
 
                             </div>
@@ -416,7 +428,7 @@ function Application() {
                                 border-solid border-b-2 border-stone-400  transition-colors duration-[0.5s]     " type="text"`}
                                 {...register("confirmPassword",{
                                   required:true,
-                                  pattern: /^[A-Za-z0-9]+$/i,
+                                  pattern: /^[A-Za-z0-9.:,?/-]+$/i,
                                   minLength:8,
                                   maxLength:30,
                                   onChange:value6,
@@ -442,7 +454,7 @@ function Application() {
                         
                         </div>
 
-                        <button className="text-center bg-[#0293DB] w-full p-2 text-white shadow-md">Login</button>
+                        <button className="lg:hover:scale-95 bg-[#0293DB] w-full p-2 text-white shadow-md flex justify-center items-center">{loading? "Applying":"Apply"} &nbsp; { loading && <span className=' animate-spin'> <ImSpinner8 /> </span>  } </button>
                     </form>
 
                     <div className="flex justify-between mt-4 space-x-2 md:space-x-6">
