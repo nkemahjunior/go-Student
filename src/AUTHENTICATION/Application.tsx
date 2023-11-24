@@ -6,6 +6,9 @@ import { useState, useRef } from "react";
 import BlueLineOnBorder from "./BlueLineOnBorder";
 import { useForm } from "react-hook-form";
 import { ImSpinner8 } from "react-icons/im";
+import { useRouter } from "next/navigation";
+
+
 
 enum admissionType {
   general ="general",
@@ -33,6 +36,7 @@ function Application():JSX.Element {
   //const onSubmit: SubmitHandler<formLabels> = (data) => console.log(data)
 
   const [loading,setLoading] = useState(false)
+  const router = useRouter()
 
   async function onSubmit(data:any){
    try {
@@ -48,7 +52,7 @@ function Application():JSX.Element {
       })
 
       //console.log(res)
-
+      if(res.ok) router.replace('/login')
 
     } catch (error) {
       console.log(error)

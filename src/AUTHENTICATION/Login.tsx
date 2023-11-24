@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import LoginHeader from "./LoginHeader";
 import { ImSpinner8 } from "react-icons/im";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
 
 
 interface formLabels {
@@ -14,6 +16,8 @@ interface formLabels {
 
 
 function Login() {
+
+  const router = useRouter()
 
     const { register,formState: { errors }, handleSubmit } = useForm<formLabels>()
 
@@ -32,6 +36,8 @@ function Login() {
      
           //console.log(res)
            if(!res.ok) toast.error("email and or password are wrong")
+
+           if(res.ok) router.replace('/')
      
      
          } catch (error) {
