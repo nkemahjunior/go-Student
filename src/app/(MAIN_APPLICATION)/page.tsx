@@ -1,3 +1,8 @@
-export default function ll(){
-    return <p className="text-red-600">hoddcme</p>
+import { redirect } from "next/navigation"
+
+function page() {
+    //redirect("/student")
+    return <p>home</p>
 }
+
+export default page

@@ -1,20 +1,15 @@
-import checkIfUserIsLogin from "@/BACKEND/checkIfUserIsLogin"
-import { redirect } from "next/navigation"
+import checkIfUserIsLogin from "@/BACKEND/ProtectingRoutes/checkIfUserIsLogin";
+import { redirect } from "next/navigation";
 
-export const revalidate = 1
 
-export default async function Applicationlayout({children}:{children: React.ReactNode}){
+export default async function Applicationlayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
 
-   
-        const session = await checkIfUserIsLogin()
-        if(!session) redirect('/login')
+  const session = await checkIfUserIsLogin();
+  if(!session) redirect('/login')
 
-    return (
-        <>
-        
-            {children}
-        
-        
-        </>
-    )
+  return <>{children}</>;
 }

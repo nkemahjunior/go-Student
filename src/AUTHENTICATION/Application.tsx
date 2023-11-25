@@ -1,12 +1,14 @@
 "use client";
 
 import ApplyHeader from "./ApplyHeader"
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 import BlueLineOnBorder from "./BlueLineOnBorder";
 import { useForm } from "react-hook-form";
 import { ImSpinner8 } from "react-icons/im";
 import { useRouter } from "next/navigation";
+
+import toast from "react-hot-toast";
 
 
 
@@ -39,9 +41,8 @@ function Application():JSX.Element {
   const router = useRouter()
 
   async function onSubmit(data:any){
-   try {
-     //console.log(data)
-     if(passwordDontMatch) return;
+   try{
+      if(passwordDontMatch) return;
 
       setLoading(true)
 
@@ -49,10 +50,12 @@ function Application():JSX.Element {
       method: 'post',
       body: JSON.stringify(data)
       
-      })
+      }) 
 
-      //console.log(res)
-      if(res.ok) router.replace('/login')
+      
+      if(!res.ok) return toast.error("account already exist")
+      router.replace(`/${data.admission}`)
+
 
     } catch (error) {
       console.log(error)
@@ -284,7 +287,7 @@ function Application():JSX.Element {
                                 <div className="flex items-center space-x-1">
 
                                   <input 
-                                  id="general" type="radio" value={"general"}
+                                  id="general" type="radio" value={"generalAdmission"}
                                   className="p-[0.1rem] appearance-none border-2 border-solid border-stone-400 w-[0.8rem] h-[0.8rem] rounded-[50%] checked:after:block  after:bg-[#0293DB] after:h-full after:w-full after:rounded-[50%]"
                                   
                                   onFocus={updateBorder3}
@@ -305,7 +308,7 @@ function Application():JSX.Element {
                                 <div className="flex items-center space-x-1">
                                   
                                   <input 
-                                   id="entrance" type="radio"  className="p-[0.1rem] appearance-none border-2 border-solid border-stone-400 w-[0.8rem] h-[0.8rem] rounded-[50%] checked:after:block  after:bg-[#0293DB] after:h-full after:w-full after:rounded-[50%] " value={"entrance"}
+                                   id="entrance" type="radio"  className="p-[0.1rem] appearance-none border-2 border-solid border-stone-400 w-[0.8rem] h-[0.8rem] rounded-[50%] checked:after:block  after:bg-[#0293DB] after:h-full after:w-full after:rounded-[50%] " value={"entranceExams"}
                                   
                                    onFocus={updateBorder3}
                                    {...register("admission",{

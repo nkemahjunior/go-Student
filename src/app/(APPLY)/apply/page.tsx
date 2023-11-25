@@ -1,15 +1,13 @@
 import Application from "@/AUTHENTICATION/Application";
-import checkIfUserIsLogin from "@/BACKEND/checkIfUserIsLogin";
+import checkIfUserIsLogin from "@/BACKEND/ProtectingRoutes/checkIfUserIsLogin";
 import { redirect } from "next/navigation";
 
-export const revalidate = 1
 
-export default async function page(){
+export const revalidate = 1;
 
-    const session = await checkIfUserIsLogin()
-    if(session) redirect('/')
+export default async function page() {
+  const session = await checkIfUserIsLogin()
+  if(session) redirect('/')
 
-    return (
-        <Application/>
-    );
+  return <Application />;
 }
