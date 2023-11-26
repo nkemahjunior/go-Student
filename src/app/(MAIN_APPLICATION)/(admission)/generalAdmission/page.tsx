@@ -1,7 +1,13 @@
-import checkIfUserIsLogin from "@/BACKEND/ProtectingRoutes/checkIfUserIsLogin";
 
-async function page() {
-  return <div>general admsiion</div>;
+import AvailablePrograms from "@/FRONTEND/GENERAL_ADMISSION/AvailablePrograms";
+
+function page():JSX.Element {
+  return (
+    <>
+    <AvailablePrograms/>
+    </>
+  )
+
 }
 
 export default page;

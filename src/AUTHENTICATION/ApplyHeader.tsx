@@ -1,10 +1,11 @@
 import Image from "next/image"
 
-function ApplyHeader() {
+function ApplyHeader({marginBottom,marginBottomLarge}:{marginBottom:number,marginBottomLarge:Number}) {
     return (
-        <div className="relative  mb-[4.5rem] md:mb-[2.3rem]">
+        <div className={`relative  mb-[${marginBottom}rem] md:mb-[${marginBottomLarge}2.3rem]`}>
 
             <div className="pt-4 px-4 pb-12   bg-[#0293DB]  space-y-4 ">
+                
                 <div className=" h-fit w-full  flex md:justify-center">
                     <div className="relative h-[5rem] w-[5rem] ">
                     <Image src={"/logo.png"} alt="logo" fill />

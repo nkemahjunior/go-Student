@@ -187,13 +187,13 @@ function Application():JSX.Element {
 
 
   return (
-    <div className="   w-screen  h-fit flex justify-center items-center bg-stone-100"
+    <div className="    h-fit flex justify-center items-center bg-stone-100"
     onClick={updateBorder3ToFalse}
     >
 
         <div className="  md:w-[35dvw] bg-white ">
             <div>
-                <ApplyHeader/>
+                <ApplyHeader marginBottom={4.5} marginBottomLarge={2.3}/>
 
 
                 <div className="  px-4 ">
@@ -305,7 +305,7 @@ function Application():JSX.Element {
 
                                 </div>
 
-                                <div className="flex items-center space-x-1">
+                                {/*<div className="flex items-center space-x-1">
                                   
                                   <input 
                                    id="entrance" type="radio"  className="p-[0.1rem] appearance-none border-2 border-solid border-stone-400 w-[0.8rem] h-[0.8rem] rounded-[50%] checked:after:block  after:bg-[#0293DB] after:h-full after:w-full after:rounded-[50%] " value={"entranceExams"}
@@ -321,7 +321,7 @@ function Application():JSX.Element {
 
                                   <label className="text-stone-400" htmlFor="entrance">Entrance Exam</label>
 
-                                </div>
+                                </div>*/}
 
                               </div>
                               <BlueLineOnBorder focus={focus3}/>

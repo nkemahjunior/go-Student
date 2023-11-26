@@ -2,6 +2,7 @@ import { supabaseServer } from "../supabaseServer"
 
 export async function checkIfUserIsStudent(){
 
+   try {
     const supabase = supabaseServer()
     
     const { data: { user },error:getuserError } = await supabase.auth.getUser()
@@ -20,7 +21,9 @@ export async function checkIfUserIsStudent(){
     
   }
 
-  if(getuserError)  throw new Error(getuserError.message)
+   } catch (error) {
+    console.log(error)
+   }
 
 
 }

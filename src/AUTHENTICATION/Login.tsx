@@ -34,7 +34,7 @@ function Login() {
            
           })
      
-          console.log(res)
+          //console.log(res)
            if(!res.ok) toast.error("email and or password are wrong")
 
            if(res.ok) router.replace('/student')

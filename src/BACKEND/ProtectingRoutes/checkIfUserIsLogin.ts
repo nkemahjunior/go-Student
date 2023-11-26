@@ -2,6 +2,7 @@ import { supabaseServer } from "../supabaseServer";
 
 export default async function checkIfUserIsLogin() {
   
+try {
   const supabase = supabaseServer()
 
   const {
@@ -11,4 +12,7 @@ export default async function checkIfUserIsLogin() {
   //console.log(data)
 
   return session;
+} catch (error) {
+  console.log(error)
+}
 }
