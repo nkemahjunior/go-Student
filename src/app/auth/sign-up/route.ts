@@ -20,7 +20,7 @@ export async function POST(request: Request) {
   const requestUrl = new URL(request.url)
   
   const formData = await request.json()
-  const{names,dateOfBirth,admission,email,password} = formData
+  const{names,dateOfBirth,email,password} = formData
   
   const cookieStore = cookies()
   const supabase = createRouteHandlerClient<Database>({ cookies: () => cookieStore },{supabaseUrl,supabaseKey})
@@ -33,14 +33,14 @@ export async function POST(request: Request) {
       data:<userDetails>{
         userName:names,
         dateOfBirth:dateOfBirth,
-        admission:admission,
+        
       }
     },
   })
 
   if(!signUpError){
     setTimeout(() =>{
-      createProfile(supabase,names,email,dateOfBirth,admission,NextResponse)
+      createProfile(supabase,names,email,dateOfBirth,NextResponse)
     },3000)
   }
 
@@ -49,11 +49,10 @@ export async function POST(request: Request) {
     console.log(signUpError)
     return NextResponse.json({},{status:400,statusText:"accout already exist"})
 
-    /**i'm not returning any response becuase supabase will instead return but a response with the status code 200 eventhough there was an error */
   }
 
 
-
+  
 
   return NextResponse.redirect(requestUrl.origin, {
     status: 301,

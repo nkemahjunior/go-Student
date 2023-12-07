@@ -1,10 +1,13 @@
 
+import { getStudentInfo } from "@/BACKEND/StudentDetails/getStudentInfo";
 import AvailablePrograms from "@/FRONTEND/GENERAL_ADMISSION/AvailablePrograms";
 
-function page():JSX.Element {
+async function page() {
+  const data = await getStudentInfo()
+
   return (
     <>
-    <AvailablePrograms/>
+    <AvailablePrograms name = {data?.name ?? "user"}/>
     </>
   )
 

@@ -9,12 +9,14 @@ import AdmissionForm from "./AdmissionForm";
 
 import { motion } from "framer-motion"
 import { logout } from "@/BACKEND/Logout/logout";
+import { useRouter } from "next/navigation";
 
 
 
 
-function AvailablePrograms():JSX.Element {
+function AvailablePrograms({name}:{name : string}):JSX.Element {
     
+    const router = useRouter()
 
     const [home,setHome] = useState(true)
     const [style,setStyle] = useState(true)
@@ -26,6 +28,11 @@ function AvailablePrograms():JSX.Element {
     function showUser(){
         setShow(v => !v)
     }
+
+
+    useEffect(()=>{
+        router.refresh()
+    },[router])
 
 
     useEffect(function(){
@@ -84,7 +91,7 @@ function AvailablePrograms():JSX.Element {
                 </div>
 
                 <div className="relative  cursor-pointer " onClick={showUser}>
-                    <p className=" text-white uppercase flex items-center"><IoPerson />user</p>
+                    <p className=" text-white uppercase flex items-center"><IoPerson />{name}</p>
 
                     <div onClick={logout}  className={`p-2 cursor-pointer bg-white text-[#0293DB]  absolute ${show === false && "hidden"}`}>
                         <p ref={ref}>logout</p>

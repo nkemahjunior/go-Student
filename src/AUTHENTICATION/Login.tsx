@@ -6,6 +6,7 @@ import LoginHeader from "./LoginHeader";
 import { ImSpinner8 } from "react-icons/im";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 
 
@@ -79,7 +80,7 @@ function Login() {
 
 
   return (
-    <div className="  w-screen h-screen flex justify-center items-center bg-stone-100">
+    <div className="  w-[99vw] h-screen flex justify-center items-center bg-stone-100">
 
         <div className="  md:w-[35dvw] bg-white ">
             <div>
@@ -170,7 +171,7 @@ function Login() {
                     </form>
 
                     <div className="flex justify-between mt-4 space-x-2">
-                        <p className=" text-green-600 font-light">Create an account</p>
+                        <Link href={"/apply"}><p className=" text-green-600 font-light">Create an account</p></Link>
                         <p className="text-red-600 font-light">Forgot password?</p>
                         <p className=" text-green-600 font-light">Live chat support</p>
                     </div>

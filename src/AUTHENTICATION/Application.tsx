@@ -9,6 +9,7 @@ import { ImSpinner8 } from "react-icons/im";
 import { useRouter } from "next/navigation";
 
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 
 
@@ -40,6 +41,8 @@ function Application():JSX.Element {
   const [loading,setLoading] = useState(false)
   const router = useRouter()
 
+
+
   async function onSubmit(data:any){
    try{
       if(passwordDontMatch) return;
@@ -51,10 +54,13 @@ function Application():JSX.Element {
       body: JSON.stringify(data)
       
       }) 
+      console.log(res)
 
       
       if(!res.ok) return toast.error("account already exist")
-      router.replace(`/${data.admission}`)
+      router.replace(`/generalAdmission`)
+
+      //console.log("sigiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
 
 
     } catch (error) {
@@ -94,7 +100,12 @@ function Application():JSX.Element {
   const [focus6, setFocus6] = useState(false);
   const [focusValue6, setFocusValue6] = useState("");
 
-  const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear();  
+  
+  
+  //const min = currentYear - 
+
+  
 
   function updateBorder() {
     setFocus((v) => !v);
@@ -254,6 +265,7 @@ function Application():JSX.Element {
 
                                 <input 
                                 type="date"
+                                min="1970-01-01" max="2012-01-01"
                                 
                                 onFocus={updateBorder2}
                                 
@@ -279,7 +291,7 @@ function Application():JSX.Element {
 
 
 
-                            <div className="mt-8  ">
+                            {/*<div className="mt-8  ">
                               <p className="text-stone-400">Choose your Admission Type</p>
                               
                               <div className="flex space-x-4 border-b-2  border-stone-400 p-2">
@@ -305,7 +317,7 @@ function Application():JSX.Element {
 
                                 </div>
 
-                                {/*<div className="flex items-center space-x-1">
+                                <div className="flex items-center space-x-1">
                                   
                                   <input 
                                    id="entrance" type="radio"  className="p-[0.1rem] appearance-none border-2 border-solid border-stone-400 w-[0.8rem] h-[0.8rem] rounded-[50%] checked:after:block  after:bg-[#0293DB] after:h-full after:w-full after:rounded-[50%] " value={"entranceExams"}
@@ -321,7 +333,7 @@ function Application():JSX.Element {
 
                                   <label className="text-stone-400" htmlFor="entrance">Entrance Exam</label>
 
-                                </div>*/}
+                                </div>
 
                               </div>
                               <BlueLineOnBorder focus={focus3}/>
@@ -330,7 +342,7 @@ function Application():JSX.Element {
                                     <p role="alert" className='text-red-500'> please choose admission type</p>
                                 )}
 
-                            </div>
+                            </div>*/}
 
                         
 
@@ -465,7 +477,7 @@ function Application():JSX.Element {
                     </form>
 
                     <div className="flex justify-between mt-4 space-x-2 md:space-x-6">
-                        <p className=" text-green-600 font-light">Already have an account?</p>
+                        <Link href={"/login"}><p className=" text-green-600 font-light">Already have an account?</p></Link>
                         <p className="text-red-500 font-light">Forgot password?</p>
                         <p className=" text-green-600 font-light">Live chat support</p>
                     </div>

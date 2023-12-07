@@ -11,9 +11,8 @@ export async function POST(request: Request) {
 
   const formData = await request.json()
   const {email,password} = formData
-  console.log(email,password)
+  //console.log(email,password)
 
- 
   
   const cookieStore = cookies()
   const supabase = createRouteHandlerClient<Database>({ cookies: () => cookieStore },{supabaseUrl,supabaseKey})
@@ -26,7 +25,7 @@ export async function POST(request: Request) {
   if(error){
     console.log(error)
     return NextResponse.json(error,{
-        status:400,
+        status:error.status,
         statusText:error.message
     })
 }

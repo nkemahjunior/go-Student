@@ -3,41 +3,84 @@ import ApplyHeader from "@/AUTHENTICATION/ApplyHeader"
 
 import { set, useForm } from "react-hook-form"
 import { formLabels } from "../../../lib/generalAdmissionTypes"
-import { useState } from "react"
+import { Suspense, useEffect, useState } from "react"
+import { deleteProfilePicture, uploadProfilePicture } from "@/BACKEND/SignUPDetails/uploadProfilePicture"
+import toast from "react-hot-toast"
+import { ImSpinner8 } from "react-icons/im"
+import { useRouter } from "next/navigation"
+import { useGetFaculties } from "@/BACKEND/ApplicationForm/useFetchFaculties"
 
 const inputStyle:string = " border-2 border-solid border-stone-400"
 const formStyle:string = "flex flex-col  w-full outline-none"
 
 
 
-function AdmissionForm():JSX.Element {
+ function AdmissionForm() {
 
     const { register,formState: { errors }, handleSubmit } = useForm<formLabels>()
 
-
     const [chosenFaculty,setChosenFaculty] = useState("")
+    const [noChosenFacultyError,setnoChosenFacultyError] = useState(false)
+    const [loading,setLoading] = useState(false)
 
+    const router = useRouter()
 
-    function onSubmit(data:any){
-        console.log(data)
+    const data = useGetFaculties()
+
+        
+
+    async function onSubmit(data:any){
+
+        try {
+            if(data.faculty === "noOption") setnoChosenFacultyError(true)
+            if(data.faculty === "noOption") return;
+
+            setLoading(true)
+    
+            const imageName = `${Math.random()}-${data.photo[0].name}`.replaceAll("/","")
+            const file = data.photo[0]
+
+            // console.log(data)
+
+            await uploadProfilePicture({imageName,file})
+            const newData = {...data,photoName:imageName}
+
+            const res = await fetch(`${location.origin}/sendApplication`,{
+                method:'put',
+                body:JSON.stringify(newData)
+            })
+
+            if(!res.ok) toast.error("An error occurred while applying, please try again")
+            if(!res.ok)  await deleteProfilePicture(imageName)
+
+            if(res.ok) router.refresh()
+
+        } catch (error) {
+            //console.log(error)
+        } finally{
+            setLoading(false)
+        }
+
     }
     
 
 
    function chosenProgram(e:any){
     setChosenFaculty(e.target.value)
+    if(e.target.value !== "noOption") setnoChosenFacultyError(false)
+    else setnoChosenFacultyError(true)
     //console.log(e.target.value)
    }
 
     return (
-        <div  className="  h-fit flex justify-center items-center bg-stone-100">
+        <div  className="  h-[100dvh] flex justify-center items-center bg-stone-100 ">
 
             
             <div className="mt-8">
                 <ApplyHeader marginBottom={0} marginBottomLarge={0}/>
                 <form action="" className="bg-white space-y-2 h-fit    px-4  py-4  " onSubmit={handleSubmit(onSubmit)}>
 
-                    <div className={formStyle}>
+                    {/* <div className={formStyle}>
                         <label htmlFor="name">Name</label>
                         <input className={inputStyle} type="text" 
                          {...register("name",{
@@ -54,9 +97,9 @@ function AdmissionForm():JSX.Element {
                             { errors.name?.type === "pattern" && (
                                 <p role="alert" className='text-red-500'> name can include only letters</p>
                             )}
-                    </div>
+                    </div> */}
 
-                    <div className={formStyle}>
+                    {/* <div className={formStyle}>
                         <label htmlFor="dateOfBirth">Date of birth</label>
                         <input className={inputStyle} type="date" 
                         {...register("dateOfBirth",{
@@ -67,7 +110,7 @@ function AdmissionForm():JSX.Element {
                             { errors.dateOfBirth?.type === "required" && (
                                 <p role="alert" className='text-red-500'> date of birth is required</p>
                             )}
-                    </div>
+                    </div> */}
 
                     
                 
@@ -93,9 +136,10 @@ function AdmissionForm():JSX.Element {
                     
                     <div className={formStyle}>
                         <label htmlFor="photo">Your Photo</label>
-                        <input className={inputStyle} type="file"  
+                        <input className={inputStyle} type="file" accept="image/*"  
                         {...register("photo",{
                             required:true,
+                            
                           })}
                         />
 
@@ -109,18 +153,23 @@ function AdmissionForm():JSX.Element {
                     <div className={formStyle}>
                         <label htmlFor="faculty">Choose Faculty or School</label>
     
+                        <Suspense fallback={<p>loading</p>}>
                         <select id="faculty" className={inputStyle}   
                         {...register("faculty",{required:true,
                             onChange:chosenProgram
                         })}
                         >
-                            <option value="fa">Faculty of arts-FA</option>
-                            <option value="fs">Faculty of Science-FS</option>
-                            <option value="fed">Faculty of education-FED</option>
-                            <option value="fet">Faculty of Engineering and Technology-FET</option>
-                            <option value="fhs">Faculty of Health Sciences-FHS</option>
+                           
+                            <option value="noOption">No option</option>
+                            {
+                                data?.map(el => <option key={el.id} value={`${el.id}`}>{el.facultyName}</option> )
+                            }
                         </select>
+                        </Suspense>
 
+                        {
+                            noChosenFacultyError  && <p className='text-red-500'>please choose a faculty</p>
+                        }
                         
 
                     </div>
@@ -128,10 +177,12 @@ function AdmissionForm():JSX.Element {
 
 
     {/******************************************************************************************************************* ***************/}
-                    <div className={`${formStyle} ${chosenFaculty === "fa" ? " ":"hidden"}`}>
+                    <div className={`${formStyle} ${chosenFaculty === "faZustaland" ? " ":"hidden"}`}>
                         <label htmlFor="arts">Faculty of Arts Programs</label>
-    
-                        <select  id="fa" className={`${inputStyle} `}  required  {...chosenFaculty === "fa" && {...register("programChosen",{required:true,})} }>
+
+                        
+                        {chosenFaculty === "faZustaland" &&
+                            <select  id="fa" className={`${inputStyle} `}  required   {...register("programChosen",{required:true,})} >
                             <option value="eng">B.sc English </option>
                             <option value="hist">B.sc History</option>
                             <option value="geo">B.sc Geography</option>
@@ -139,6 +190,7 @@ function AdmissionForm():JSX.Element {
                             <option value="lit">B.sc Literature</option>
                             
                         </select>
+                        }
 
 
                     </div>
@@ -146,17 +198,19 @@ function AdmissionForm():JSX.Element {
 
 
 
-                    <div className={`${formStyle}  ${chosenFaculty === "fs" ? " ":"hidden"}`}>
+                    <div className={`${formStyle}  ${chosenFaculty === "fsZustaland" ? " ":"hidden"}`}>
                         <label htmlFor="science">Faculty of Science Programs</label>
     
-                        <select  id="fs" className={`${inputStyle} `} required {...chosenFaculty === "fs" && {...register("programChosen",{required:true,})} }>
-                            <option value="csc">B.sc Computer Science</option>
-                            <option value="chem">B.sc Chemistry</option>
-                            <option value="bio">B.sc Biology</option>
-                            <option value="phy">B.sc Physics</option>
-                            <option value="env">B.sc Enviromental Science</option>
-                            
-                        </select>
+                      {chosenFaculty === "fsZustaland" &&
+                          <select  id="fs" className={`${inputStyle} `} required  {...register("programChosen",{required:true,})} >
+                          <option value="csc">B.sc Computer Science</option>
+                          <option value="chem">B.sc Chemistry</option>
+                          <option value="bio">B.sc Biology</option>
+                          <option value="phy">B.sc Physics</option>
+                          <option value="env">B.sc Enviromental Science</option>
+                          
+                      </select>
+                      }
 
                         
 
@@ -165,15 +219,17 @@ function AdmissionForm():JSX.Element {
 
 
 
-                    <div className={`${formStyle}  ${chosenFaculty === "fed" ? " ":"hidden"}`}>
+                    <div className={`${formStyle}  ${chosenFaculty === "fedZustaland" ? " ":"hidden"}`}>
                         <label htmlFor="fed">Faculty of Education Programs</label>
     
-                        <select  id="faculty" className={`${inputStyle} `} {...chosenFaculty === "fed" && {...register("programChosen",{required:true,})} }>
+                        {chosenFaculty === "fedZustaland" && 
+                            <select  id="faculty" className={`${inputStyle} `} {...register("programChosen",{required:true,})} >
                             <option value="epy">B.sc Educational Psychology</option>
                             <option value="cst">B.sc Curriculum Studies</option>
                             <option value="efa">B.sc Educational Foundations</option>
                            
                         </select>
+                        }
 
 
                     </div>
@@ -181,32 +237,36 @@ function AdmissionForm():JSX.Element {
 
 
 
-                    <div className={`${formStyle}  ${chosenFaculty === "fet" ? "":"hidden"}`}>
+                    <div className={`${formStyle}  ${chosenFaculty === "fetZustaland" ? "":"hidden"}`}>
                         <label htmlFor="fet">Faculty of Engineering and Technology Programs</label>
     
-                        <select  id="fet" className={`${inputStyle} `}  required {...chosenFaculty === "fet" && {...register("programChosen",{required:true,})} }>
-                            <option value="cengS">B.sc Software Engineering</option>
-                            <option value="cengM">B.sc Mechanical Engineering</option>
-                            <option value="cengC">B.sc Civil Engineering</option>
-                            <option value="cengE">B.sc Electrical Engineering</option>
-                            <option value="cengM">B.sc Minning</option>
-                            
-                        </select>
+                       {chosenFaculty === "fetZustaland" && 
+                         <select  id="fet" className={`${inputStyle} `}  required {...register("programChosen",{required:true,})} >
+                         <option value="cengS">B.sc Software Engineering</option>
+                         <option value="cengM">B.sc Mechanical Engineering</option>
+                         <option value="cengC">B.sc Civil Engineering</option>
+                         <option value="cengE">B.sc Electrical Engineering</option>
+                         <option value="cengMi">B.sc Minning</option>
+                         
+                     </select>
+                       }
 
                     </div>
 
 
 
-                    <div className={`${formStyle} ${chosenFaculty === "fhs" ? "":"hidden"}`}>
+                    <div className={`${formStyle} ${chosenFaculty === "fhsZustaland" ? "":"hidden"}`}>
                         <label htmlFor="fhs">Faculty of Health Sciences Programs</label>
     
-                        <select  id="fhs" className={`${inputStyle} `}  required  {...chosenFaculty === "fhs" && {...register("programChosen",{required:true,})} }>
-                            <option value="med">B.sc Medicine</option>
-                            <option value="nur">B.sc Nursing</option>
-                            <option value="midW">B.sc MidWife</option>
-                            <option value="dent">B.sc Dentist</option>
-                            
-                        </select>
+                       { chosenFaculty === "fhsZustaland" &&
+                         <select  id="fhs" className={`${inputStyle} `}  required   {...register("programChosen",{required:true,})} >
+                         <option  value="med">B.sc Medicine</option>
+                         <option value="nur">B.sc Nursing</option>
+                         <option value="midW">B.sc MidWifery</option>
+                         <option value="dent">B.sc Dental Surgery</option>
+                         
+                     </select>
+                       }
 
                     </div>
 
@@ -245,7 +305,7 @@ function AdmissionForm():JSX.Element {
 
                     </div>
 
-                    <button className="lg:hover:scale-95 bg-[#0293DB] w-full p-2 text-white shadow-md flex justify-center items-center">{/*loading? "Applying":"Apply"} &nbsp; { loading && <span className=' animate-spin'> <ImSpinner8 /> </span> */ } apply </button>
+                    <button className="lg:hover:scale-95 bg-[#0293DB] w-full p-2 text-white shadow-md flex justify-center items-center">{loading? "Applying":"Apply"} &nbsp; { loading && <span className=' animate-spin'> <ImSpinner8 /> </span>  } </button>
 
                 </form>
             </div>
