@@ -1,9 +1,10 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
-import {supabaseUrl,supabaseKey} from "../../../BACKEND/supabase"
+
 
 import type { Database } from '../../../../lib/database.types'
+import { supaabaseRoute } from '@/BACKEND/supabaseRoute'
 
 export async function POST(request: Request) {
 
@@ -14,8 +15,7 @@ export async function POST(request: Request) {
   //console.log(email,password)
 
   
-  const cookieStore = cookies()
-  const supabase = createRouteHandlerClient<Database>({ cookies: () => cookieStore },{supabaseUrl,supabaseKey})
+ const supabase = supaabaseRoute()
 
  const {error} = await supabase.auth.signInWithPassword({
     email,
