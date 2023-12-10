@@ -1,4 +1,4 @@
-import CourseRegistrationLinks from "@/FRONTEND/COURSE_REGISTRATION/CourseRegistrationLinks";
+import CourseRegistrationLinks from "@/FRONTEND/MAJOR_COURSE_REGISTRATION/CourseRegistrationLinks";
 
 export default  function courseRegistrationlayout({ children,}: {children: React.ReactNode; }) {
   

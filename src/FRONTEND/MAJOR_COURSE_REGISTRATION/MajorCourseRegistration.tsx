@@ -1,16 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { MdDelete } from "react-icons/md";
-import SelectCourses from "./SelectCourses";
+import SelectCourses, { courses } from "./SelectCourses";
+import { IoIosAdd } from "react-icons/io";
+import DropButton from "./DropButton";
+import { registeredCourses } from "@/BACKEND/CourseRegistrationDetails/getRegisteredCourses";
+import { useRouter } from "next/navigation";
 
-
-function MajorCourseRegistration({department,name}: {department: string,name:string}): JSX.Element {
+function MajorCourseRegistration({department,name, registeredCourses}: {department: string,name:string, 
+  registeredCourses:registeredCourses[] | [] | null | undefined }): JSX.Element {
 
 
   const [hidden, setHidden] = useState(true);
   const toggleHidden = () => setHidden((v) => !v);
+  const router = useRouter()
+
+  // useEffect(() =>{
+  //   router.refresh()
+  // },[])
+
 
 
 
@@ -67,8 +76,11 @@ function MajorCourseRegistration({department,name}: {department: string,name:str
     },
   };
 
+
+
   return (
     <>
+    
       <AnimatePresence mode="wait">
         <motion.div
           key={Math.random()}
@@ -94,43 +106,25 @@ function MajorCourseRegistration({department,name}: {department: string,name:str
             </thead>
 
             <tbody>
-              <tr className=" border border-stone-300 border-solid lg:hover:bg-stone-200 ">
-                <td className=" font-light p-4 text-center">1</td>
-                <td className=" font-light p-4 text-center uppercase">
-                  CSC405
-                </td>
-                <td className=" font-light p-4 text-center uppercase">
-                  artificial intelligence
-                </td>
-                <td className=" font-light p-4 text-center">6</td>
-                <td className=" font-light p-4 text-center capitalize flex items-center justify-center">
-                  <button className=" bg-red-600 p-2 text-center text-white flex items-center justify-center shadow-lg rounded-sm lg:hover:scale-95">
-                    <span>
-                      <MdDelete />
-                    </span>{" "}
-                    Drop
-                  </button>
-                </td>
-              </tr>
+              {
+                registeredCourses?.map((el,i) => (
+                  <tr key={Math.random()} className=" border border-stone-300 border-solid lg:hover:bg-stone-200 ">
+                    <td className=" font-light p-4 text-center">{i + 1}</td>
+                    <td className=" font-light p-4 text-center uppercase">
+                      {el?.courseID}
+                    </td>
+                    <td className=" font-light p-4 text-center uppercase">
+                      {el?.courseName}
+                    </td>
+                    <td className=" font-light p-4 text-center">6</td>
+                    <td className=" font-light p-4 text-center capitalize flex items-center justify-center">
+                      <DropButton cid={el.courseID} department={department} />
+                    </td>
+                </tr>
+                ))
+              }
 
-              <tr className=" border border-stone-300 border-solid p-24 lg:hover:bg-stone-200">
-                <td className=" font-light p-4 text-center">1</td>
-                <td className=" font-light p-4 text-center uppercase">
-                  CSC405
-                </td>
-                <td className=" font-light p-4 text-center uppercase">
-                  artificial intelligence
-                </td>
-                <td className=" font-light p-4 text-center">6</td>
-                <td className=" font-light p-4 text-center capitalize flex items-center justify-center">
-                  <button className=" bg-red-600 p-2 text-center text-white flex items-center justify-center shadow-lg rounded-sm lg:hover:scale-95">
-                    <span>
-                      <MdDelete />
-                    </span>{" "}
-                    Drop
-                  </button>
-                </td>
-              </tr>
+              
             </tbody>
           </table>
 
@@ -140,7 +134,7 @@ function MajorCourseRegistration({department,name}: {department: string,name:str
               onClick={toggleHidden}
               className=" bg-[#198AC2] text-white text-sm md:text-base p-2 mt-4 w-[60%] shadow-lg rounded-md lg:hover:scale-95"
             >
-              <span>Add More Major Courses</span>
+              <span className="flex justify-center items-center"><IoIosAdd/> &nbsp;Add More Major Courses</span>
             </button>
         </div>
           
@@ -158,7 +152,7 @@ function MajorCourseRegistration({department,name}: {department: string,name:str
           className={`  ${hidden ? "hidden" : ""}      `}
         >
 
-          <SelectCourses department={department} name={name} toggleHidden={toggleHidden}/>
+          <SelectCourses department={department} name={name} toggleHidden={toggleHidden} registeredCourses={registeredCourses} />
           
         </motion.div>
       </AnimatePresence>

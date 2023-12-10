@@ -25,11 +25,8 @@ try {
         return data
     }
 
+    if(getuserError) throw new Error("could not get the user id")
 
-    
-
-
-    
 } catch (error) {
     console.log(  error)
 }
