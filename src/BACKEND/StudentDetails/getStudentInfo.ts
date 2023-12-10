@@ -16,7 +16,7 @@ try {
         let { data: profile, error } = await supabase
         .from('Profile')
         .select('*')
-        .eq('id',user?.id)
+        .eq('id',user.id)
     
         if(error) throw new Error(error.message)
     

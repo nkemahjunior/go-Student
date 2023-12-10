@@ -16,7 +16,7 @@ export async function checkIfUserIsStudent(){
       const { data:admittedOrNot, error } = await supabase
       .from('Profile')
       .select('admissionAccepted')
-      .eq('id',user?.id)
+      .eq('id',user.id)
 
       
 
