@@ -6,10 +6,25 @@ import { FaChartSimple } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
 import { getStudentInfo } from "@/BACKEND/StudentDetails/getStudentInfo";
 import { departments } from "@/BACKEND/CourseRegistrationDetails/departments";
+import { revalidatePath } from "next/cache";
+
+interface home{
+  created_at:string|null|undefined
+  name:string|null|undefined
+  email:string|null|undefined
+  dateOfBirth:string|null|undefined
+  nationality:string|null|undefined
+  gender:string|null|undefined
+  maritalStatus:string|null|undefined
+  photo:string|null|undefined
+  faculty:string|null|undefined
+  department:string|null|undefined
+}
 
 async function Home() {
   const data = await getStudentInfo();
-  console.log(data);
+
+  
 
   const {
     created_at,
@@ -22,8 +37,9 @@ async function Home() {
     photo,
     faculty,
     department,
-  } = data;
-  const date = created_at.substring(0, 10);
+  } = data!;
+
+  const date = created_at?.substring(0, 10);
 
   return (
     <>
@@ -39,7 +55,7 @@ async function Home() {
                 <div className="">
                   <div className=" flex justify-center md:flex-none md:justify-normal ">
                     <div className="relative h-[10rem] w-[10rem] rounded-[50%] md:rounded-none overflow-hidden md:overflow-visible md:w-[15rem] md:h-[15rem]    border-4 border-solid border-white md:border-none">
-                      <Image src={photo?.trim()} alt="student's picture" fill />
+                      <Image src={photo!?.trim()} alt="student's picture" fill />
                     </div>
                   </div>
 
@@ -117,7 +133,7 @@ async function Home() {
                     <div className="md:grid md:grid-cols-2 lg:-space-x-40">
                       <p>Degree Program</p>
                       <p className=" font-extralight capitalize">
-                        {departments[department]}
+                        {departments[department!]}
                       </p>
                     </div>
 
