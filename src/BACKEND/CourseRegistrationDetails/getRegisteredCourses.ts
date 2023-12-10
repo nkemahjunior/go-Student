@@ -13,9 +13,12 @@ export interface registeredCourses{
 }
 
 
-export async function getRegisteredCourses( department:string){
+export async function getRegisteredCourses( department:string | undefined | null){
+
     try {
 
+        if(!department ) throw new Error("department can not be null or undefined boy")
+ 
         const supabase = supabaseServer()
 
         const { data: { user },error:getuserError } = await supabase.auth.getUser()

@@ -2,16 +2,18 @@ import { getRegisteredCourses } from "@/BACKEND/CourseRegistrationDetails/getReg
 import { getStudentInfo } from "@/BACKEND/StudentDetails/getStudentInfo"
 import MajorCourseRegistration from "@/FRONTEND/MAJOR_COURSE_REGISTRATION/MajorCourseRegistration"
 
+
+
 async function page() {
 
     const data = await getStudentInfo()
-    const {department, name}= data
-    const courses = await getRegisteredCourses(department)
+   // const {department, name} = data
+    const courses = await getRegisteredCourses(data?.department)
     
 
     return (
         <>
-            <MajorCourseRegistration department={department}  name={name} registeredCourses={courses}/>
+            <MajorCourseRegistration department={data?.department}  name={data?.name} registeredCourses={courses}/>
         </>
     )
 }

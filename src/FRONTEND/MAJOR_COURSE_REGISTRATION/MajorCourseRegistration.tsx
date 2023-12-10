@@ -8,7 +8,7 @@ import DropButton from "./DropButton";
 import { registeredCourses } from "@/BACKEND/CourseRegistrationDetails/getRegisteredCourses";
 import { useRouter } from "next/navigation";
 
-function MajorCourseRegistration({department,name, registeredCourses}: {department: string,name:string, 
+function MajorCourseRegistration({department,name, registeredCourses}: {department: string | undefined | null,name:string | undefined | null, 
   registeredCourses:registeredCourses[] | [] | null | undefined }): JSX.Element {
 
 

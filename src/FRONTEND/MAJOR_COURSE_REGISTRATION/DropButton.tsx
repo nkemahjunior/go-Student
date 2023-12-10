@@ -2,11 +2,12 @@ import { getCoursesForDepartment } from "@/BACKEND/CourseRegistrationDetails/dep
 import { dropAcourse } from "@/BACKEND/CourseRegistrationDetails/dropAcourse"
 import { useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
+import toast from "react-hot-toast"
 import { ImSpinner8 } from "react-icons/im"
 import { MdDelete } from "react-icons/md"
 
 
-function DropButton({cid,department}:{cid:string,department:string}):JSX.Element {
+function DropButton({cid,department}:{cid:string,department:string | null | undefined}):JSX.Element {
 
     const [isPending,startTransition] = useTransition()
     
@@ -17,6 +18,7 @@ function DropButton({cid,department}:{cid:string,department:string}):JSX.Element
     async function dropCourse(courseID:string){
         try {
 
+          if(!department) throw new Error("why is department null boy")
             
           const dept = getCoursesForDepartment[department]
           setDropping(true)

@@ -20,7 +20,7 @@ export interface courses{
   level:number
 }
 
-function SelectCourses( {department,name,toggleHidden,registeredCourses}: {department: string,name:string,toggleHidden:any,registeredCourses:registeredCourses[] | [] | null | undefined  }):JSX.Element {
+function SelectCourses( {department,name,toggleHidden,registeredCourses}: {department: string | null | undefined,name:string| null | undefined,toggleHidden:any,registeredCourses:registeredCourses[] | [] | null | undefined  }):JSX.Element {
 
   const[loadingCourses,setLoadingCourses] = useState(false)
   const[courseData,setCourseData] = useState<courses[]>([])
@@ -30,7 +30,8 @@ function SelectCourses( {department,name,toggleHidden,registeredCourses}: {depar
   async function getLevel(e: any) {
     try {
 
-    if(e.target.value === "noOption") return;
+      if(e.target.value === "noOption") return;
+      if(!department) throw new Error("why is department null boy")
 
       let level = e.target.value
   
@@ -73,8 +74,7 @@ function SelectCourses( {department,name,toggleHidden,registeredCourses}: {depar
   async function saveThe_selectedCourses(){
     try {
       if(!holdCourses) return toggleHidden()
-
-     let alreadyRegisteredCourse = false;
+      if(!department) throw new Error("why is department null boy")
 
       // if (registeredCourses){
 
@@ -162,7 +162,7 @@ function SelectCourses( {department,name,toggleHidden,registeredCourses}: {depar
             <p className="  text-sm">
               Major Courses in{" "}
               <span className=" font-semibold">
-                B.sc {departments[department]}
+                B.sc {departments[department!]}
               </span>
             </p>
 
