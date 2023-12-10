@@ -25,6 +25,9 @@ export async function getRegisteredCourses( department:string | undefined | null
         const dept = getCoursesForDepartment[department]
 
         if(!getuserError){
+
+            if(!user) throw new Error("there is no user boy")
+
             let { data, error }:{data:registeredCourses[] | [] |  null , error:PostgrestError | null} = await supabase
             .from(`${dept}Students`)
             .select('*')
