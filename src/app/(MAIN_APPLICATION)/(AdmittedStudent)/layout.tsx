@@ -11,7 +11,7 @@ export default async function Applicationlayout({
 }) {
 
     const admitionDetail = await checkIfUserIsStudent() 
-    const admittedOrNot:boolean = admitionDetail?.at(0)?.admissionAccepted
+    const admittedOrNot = admitionDetail?.at(0)?.admissionAccepted
 
     // console.log("---------------------------////////////////////------------------------------------------------------------------")
     // console.log("---------------------------------------------------------------------------------------------")
@@ -20,7 +20,7 @@ export default async function Applicationlayout({
 
 
 
-    if(admittedOrNot === false) {
+    if(admittedOrNot === false || admittedOrNot === null || admittedOrNot === undefined) {
       //console.log("redirecting")
       redirect('/generalAdmission')
 
@@ -28,11 +28,11 @@ export default async function Applicationlayout({
     else if(admittedOrNot === true){ 
       
       const data = await getStudentInfo()
-      const {photo,name}= data
+      //const {photo,name}= data
       
       return( 
       <>
-        <MainHeader photo = {photo} name={name}/>
+        <MainHeader photo = {data?.photo} name={data?.name}/>
         {children}
       </>
       )

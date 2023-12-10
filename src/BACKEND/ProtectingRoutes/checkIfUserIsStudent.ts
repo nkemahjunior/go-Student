@@ -10,6 +10,8 @@ export async function checkIfUserIsStudent(){
  
     
     if(!getuserError){
+
+      if(!user) throw new Error("the user is null boy")
       
       const { data:admittedOrNot, error } = await supabase
       .from('Profile')
@@ -20,8 +22,8 @@ export async function checkIfUserIsStudent(){
 
       if(error)  throw new Error(error.message)
       
-        // console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-        // console.log(admittedOrNot)
+      // console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+      // console.log(admittedOrNot)
 
       return admittedOrNot
     

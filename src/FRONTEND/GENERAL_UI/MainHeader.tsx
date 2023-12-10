@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import { getSemester } from "./getSemester"
 
 
-function MainHeader({photo,name}:{photo:string,name:string}):JSX.Element {
+function MainHeader({photo,name}:{photo:string| null | undefined,name:string| null | undefined}):JSX.Element {
    
     const pathname = usePathname()
 
@@ -39,7 +39,7 @@ function MainHeader({photo,name}:{photo:string,name:string}):JSX.Element {
                                     </div>
 
                                     <div className=" h-10 w-10 relative rounded-[50%] overflow-hidden ">
-                                        <Image src={photo?.trim()} alt="student's picture" fill></Image>
+                                        <Image src={photo!?.trim()} alt="student's picture" fill></Image>
                                     </div>
                                 </div>
 
