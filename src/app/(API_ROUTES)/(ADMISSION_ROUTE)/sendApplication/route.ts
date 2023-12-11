@@ -1,6 +1,6 @@
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
 import { NextResponse } from "next/server"
-import { supaabaseRoute } from "@/BACKEND/supabaseRoute"
+import { supaabaseRoute } from "@/BACKEND/General/supabaseRoute"
 
 interface formdata{
   nationality:string  

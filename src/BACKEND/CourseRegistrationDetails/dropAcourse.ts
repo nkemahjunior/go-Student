@@ -1,7 +1,7 @@
 'use server'
 
 import { revalidatePath } from "next/cache";
-import { supabaseServer } from "../supabaseServer"
+import { supabaseServer } from "../General/supabaseServer"
 
 export async function dropAcourse(courseID:string,department:string){
     try {

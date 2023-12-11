@@ -1,4 +1,4 @@
-import { supabaseServer } from "../supabaseServer";
+import { supabaseServer } from "../General/supabaseServer";
 export const dynamic = "force-dynamic"
 
 export default async function checkIfUserIsLogin() {

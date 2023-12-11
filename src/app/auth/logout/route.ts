@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 
 
 import type { Database } from '../../../../lib/database.types'
-import { supaabaseRoute } from '@/BACKEND/supabaseRoute'
+import { supaabaseRoute } from '@/BACKEND/General/supabaseRoute'
 
 export async function POST(request: Request) {
 

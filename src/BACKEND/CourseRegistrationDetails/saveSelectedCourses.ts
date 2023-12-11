@@ -1,7 +1,7 @@
 'use server';
 
-import { courses } from "@/FRONTEND/MAJOR_COURSE_REGISTRATION/SelectCourses"
-import { supabaseServer } from "../supabaseServer"
+import { courses } from "@/FRONTEND/COURSE_REGISTRATION/MAJOR_COURSE_REGISTRATION/SelectCourses"
+import { supabaseServer } from "../General/supabaseServer"
 import { revalidatePath } from "next/cache";
 
 

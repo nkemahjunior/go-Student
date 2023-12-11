@@ -29,11 +29,11 @@ export  const departments:any ={
 }
 
 export  const getCoursesForDepartment:any ={
-    eng:"English",
-    hist:"History",
-    geo:"Geography",
-    fre:"French",
-    lit:"Literature",
+    eng:"english",
+    hist:"history",
+    geo:"geography",
+    fre:"french",
+    lit:"literature",
 
     csc:"computerScience",
     chem:"chemistry",
@@ -54,5 +54,35 @@ export  const getCoursesForDepartment:any ={
     nur:"nursing",
     midW:"certifiedNurseMidwife",
     dent:"doctorOfDentalSurgery"
+
+}
+
+
+export  const departmentsKeys:any ={
+    eng:"eng",
+    hist:"hist",
+    geo:"geo",
+    fre:"fre",
+    lit:"lit",
+
+    csc:"csc",
+    chem:"chem",
+    bio:"bio",
+    phy:"phy",
+    env:"env",
+
+    epy:"epy",
+    cst:"cst",
+
+    cengS:"cengS",
+    cengM:"cengM",
+    cengC:"cengC",
+    cengE:"cengE",
+    cengMi:"cengMi",
+
+    med:"med",
+    nur:"nur",
+    midW:"midW",
+    dent:"dent"
 
 }

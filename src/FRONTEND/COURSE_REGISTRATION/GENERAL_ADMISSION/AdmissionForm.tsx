@@ -2,7 +2,7 @@
 import ApplyHeader from "@/AUTHENTICATION/ApplyHeader"
 
 import { set, useForm } from "react-hook-form"
-import { formLabels } from "../../../lib/generalAdmissionTypes"
+import { formLabels } from "../../../../lib/generalAdmissionTypes"
 import { Suspense, useEffect, useState } from "react"
 import { deleteProfilePicture, uploadProfilePicture } from "@/BACKEND/SignUPDetails/uploadProfilePicture"
 import toast from "react-hot-toast"

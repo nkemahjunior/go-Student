@@ -6,7 +6,7 @@ import { NextResponse } from 'next/server'
 
 import type { Database } from '../../../../lib/database.types'
 import { createProfile } from '@/BACKEND/SignUPDetails/createProfile'
-import { supaabaseRoute } from '@/BACKEND/supabaseRoute'
+import { supaabaseRoute } from '@/BACKEND/General/supabaseRoute'
 
 interface userDetails{
   userName:string,

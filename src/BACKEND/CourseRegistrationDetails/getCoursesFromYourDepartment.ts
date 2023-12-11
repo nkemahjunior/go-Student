@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { createRouteHandlerClient, createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { supaabaseRoute } from "../supabaseRoute";
+import { supaabaseRoute } from "../General/supabaseRoute";
 
 
 
@@ -30,8 +30,8 @@ export async function getCoursesFromYourDepartment(tableName:string | null,level
     
         if (error) throw new Error(error.message)
 
+
         return {data,error}
-        
 
     } catch (error) {
         //console.log("error getting your department")

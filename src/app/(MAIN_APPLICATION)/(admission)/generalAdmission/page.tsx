@@ -1,6 +1,6 @@
 
 import { getStudentInfo } from "@/BACKEND/StudentDetails/getStudentInfo";
-import AvailablePrograms from "@/FRONTEND/GENERAL_ADMISSION/AvailablePrograms";
+import AvailablePrograms from "@/FRONTEND/COURSE_REGISTRATION/GENERAL_ADMISSION/AvailablePrograms";
 
 async function page() {
   const data = await getStudentInfo()

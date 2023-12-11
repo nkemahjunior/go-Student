@@ -1,8 +1,10 @@
+import ElectiveRegistration from "@/FRONTEND/COURSE_REGISTRATION/ELECTIVE_REGISTRATION/ElectiveRegistration"
+
 function page():JSX.Element {
     return (
-        <div>
-            elective course
-        </div>
+        <>
+            <ElectiveRegistration/>
+        </>
     )
 }
 

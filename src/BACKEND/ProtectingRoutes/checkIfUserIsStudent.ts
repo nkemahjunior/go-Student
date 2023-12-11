@@ -1,4 +1,4 @@
-import { supabaseServer } from "../supabaseServer"
+import { supabaseServer } from "../General/supabaseServer"
 
 
 export async function checkIfUserIsStudent(){

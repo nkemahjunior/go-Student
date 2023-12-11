@@ -1,24 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import SelectCourses, { courses } from "./SelectCourses";
+import { AnimatePresence,motion } from "framer-motion";
+import { useState } from "react";
 import { IoIosAdd } from "react-icons/io";
-import DropButton from "./DropButton";
-import { registeredCourses } from "@/BACKEND/CourseRegistrationDetails/getRegisteredCourses";
-import { useRouter } from "next/navigation";
+import SelectMinor from "./SelectMinor";
+import DropMinor from "./DropMinor";
+import { minor } from "@/app/(MAIN_APPLICATION)/(AdmittedStudent)/courseRegistration/minor/page";
 
-function MajorCourseRegistration({department,name, registeredCourses}: {department: string | undefined | null,name:string | undefined | null, 
-  registeredCourses:registeredCourses[] | [] | null | undefined }): JSX.Element {
+interface props{
+  deptFrom :string
+  courses:minor[] | null | undefined
+}
 
+function MinorRegistration({deptFrom,courses}:props):JSX.Element {
 
   const [hidden, setHidden] = useState(true);
   const toggleHidden = () => setHidden((v) => !v);
-  const router = useRouter()
 
-  // useEffect(() =>{
-  //   router.refresh()
-  // },[])
 
 
 
@@ -106,21 +104,23 @@ function MajorCourseRegistration({department,name, registeredCourses}: {departme
             </thead>
 
             <tbody>
+              
+                
               {
-                registeredCourses?.map((el,i) => (
+                courses?.map((el,i) => (
                   <tr key={Math.random()} className=" border border-stone-300 border-solid lg:hover:bg-stone-200 ">
-                    <td className=" font-light p-4 text-center">{i + 1}</td>
+                    <td className=" font-light p-4 text-center">1</td>
                     <td className=" font-light p-4 text-center uppercase">
-                      {el?.courseID}
+                      {el.courseID}
                     </td>
                     <td className=" font-light p-4 text-center uppercase">
-                      {el?.courseName}
+                      {el.courseName}
                     </td>
-                    <td className=" font-light p-4 text-center">6</td>
+                    <td className=" font-light p-4 text-center">{el.creditValue}</td>
                     <td className=" font-light p-4 text-center capitalize flex items-center justify-center">
-                      <DropButton cid={el.courseID} department={department} />
+                      <DropMinor cid={el.courseID}  />
                     </td>
-                </tr>
+                  </tr>
                 ))
               }
 
@@ -150,9 +150,9 @@ function MajorCourseRegistration({department,name, registeredCourses}: {departme
           animate="animate"
           exit="exit"
           className={`  ${hidden ? "hidden" : ""}      `}
-        >
+        > 
 
-          <SelectCourses department={department} name={name} toggleHidden={toggleHidden} registeredCourses={registeredCourses} />
+          <SelectMinor toggleHidden={toggleHidden} deptFrom={deptFrom} />
           
         </motion.div>
       </AnimatePresence>
@@ -175,6 +175,7 @@ function MajorCourseRegistration({department,name, registeredCourses}: {departme
       <hr className="w-full bg-stone-200 mt-4 md:mt-8" />
     </>
   );
+
 }
 
-export default MajorCourseRegistration;
+export default MinorRegistration

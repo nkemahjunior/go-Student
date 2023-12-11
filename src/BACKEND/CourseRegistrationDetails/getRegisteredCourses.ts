@@ -1,5 +1,5 @@
-import { courses } from "@/FRONTEND/MAJOR_COURSE_REGISTRATION/SelectCourses"
-import { supabaseServer } from "../supabaseServer"
+import { courses } from "@/FRONTEND/COURSE_REGISTRATION/MAJOR_COURSE_REGISTRATION/SelectCourses"
+import { supabaseServer } from "../General/supabaseServer"
 import { departments, getCoursesForDepartment } from "./departments"
 import { PostgrestError } from "@supabase/supabase-js"
 import { UUID } from "crypto"
@@ -44,4 +44,5 @@ export async function getRegisteredCourses( department:string | undefined | null
     } catch (error) {
         console.log(error)
     }
+    
 }

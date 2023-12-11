@@ -1,4 +1,4 @@
-import { supaabaseRoute } from "@/BACKEND/supabaseRoute"
+import { supaabaseRoute } from "@/BACKEND/General/supabaseRoute"
 import { NextResponse } from "next/server"
 
 

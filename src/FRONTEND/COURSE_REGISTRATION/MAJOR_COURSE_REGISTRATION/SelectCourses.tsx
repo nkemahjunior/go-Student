@@ -1,10 +1,10 @@
 import { useState, useTransition } from "react"
-import { getSemester } from "../GENERAL_UI/getSemester"
+import { getSemester } from "../../GENERAL_UI/getSemester"
 import { departments, getCoursesForDepartment } from "@/BACKEND/CourseRegistrationDetails/departments"
 import toast from "react-hot-toast"
 import { IoSaveOutline } from "react-icons/io5";
 
-import LoadingCourses from "./LoadingCourses"
+import LoadingCourses from "../SHARED_COURSE_REG/LoadingCourses"
 import { saveSelectedCourses } from "@/BACKEND/CourseRegistrationDetails/saveSelectedCourses"
 import { ImSpinner8 } from "react-icons/im";
 import { useRouter } from "next/navigation";
@@ -20,14 +20,14 @@ export interface courses{
   level:number
 }
 
-function SelectCourses( {department,name,toggleHidden,registeredCourses}: {department: string | null | undefined,name:string| null | undefined,toggleHidden:any,registeredCourses:registeredCourses[] | [] | null | undefined  }):JSX.Element {
+function  SelectCourses( {department,name,toggleHidden,registeredCourses,minor}: {department: string | null | undefined,name:string| null | undefined,toggleHidden:any,registeredCourses:registeredCourses[] | [] | null | undefined ,minor:boolean }):JSX.Element {
 
   const[loadingCourses,setLoadingCourses] = useState(false)
   const[courseData,setCourseData] = useState<courses[]>([])
   const[holdCourses,setHoldCourses] = useState<courses[] | undefined>()
   const [isPending,startTransition] = useTransition()
   
-  async function getLevel(e: any) {
+  async function getLevelAndLoadCoures(e: any) {
     try {
 
       if(e.target.value === "noOption") return;
@@ -145,7 +145,7 @@ function SelectCourses( {department,name,toggleHidden,registeredCourses}: {depar
               Select a level to load its courses
             </p>
             <select
-              onChange={getLevel}
+              onChange={getLevelAndLoadCoures}
               name="level"
               className=" w-[70%] p-4 outline-none border-b-2 border-stone-200"
             >
