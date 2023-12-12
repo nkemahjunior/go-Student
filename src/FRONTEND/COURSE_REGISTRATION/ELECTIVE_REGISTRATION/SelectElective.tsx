@@ -1,13 +1,109 @@
 import { useState, useTransition } from "react"
 import { ImSpinner8 } from "react-icons/im"
 import { IoSaveOutline } from "react-icons/io5"
+import { courses } from "../MAJOR_COURSE_REGISTRATION/SelectCourses"
+import { getSemester } from "@/FRONTEND/GENERAL_UI/getSemester"
+import { departments, getCoursesForDepartment } from "@/BACKEND/CourseRegistrationDetails/departments"
+import toast from "react-hot-toast"
+import LoadingCourses from "../SHARED_COURSE_REG/LoadingCourses"
+import { saveElective } from "@/BACKEND/ElectiveRegistration/saveElective"
 
-function SelectElective():JSX.Element {
-    const[loadingCourses,setLoadingCourses] = useState(false)
-    const[courseData,setCourseData] = useState([])
-    const[holdCourses,setHoldCourses] = useState()
-    const [isPending,startTransition] = useTransition()
-    
+interface props{
+  toggleHidden:any
+  deptFrom:string
+}
+
+function SelectElective({toggleHidden,deptFrom}:props):JSX.Element {
+
+  const[loadingCourses,setLoadingCourses] = useState(false)
+  const[courseData,setCourseData] = useState<courses[]>([])
+  const[holdCourses,setHoldCourses] = useState<courses[]>()
+  const[saving,setSaving] = useState(false)
+
+
+  const[elective,setElective] = useState("")
+  //const getMinor = (e:any) => setElective(e.target.value)
+
+  function getElective(e:any){
+    if(elective !== e.target.value) setHoldCourses([])
+    setElective(e.target.value)
+  }
+
+  async function getLevelAndLoadCourses(e:any){
+    try {
+      if(elective.length < 1) return;
+      if(e.target.value === "noOption") return;
+
+      const level = e.target.value
+      const semester = getSemester()
+
+      setLoadingCourses(true)
+
+      //const userInfo =  await getStudentInfo()
+
+
+
+      const res = await fetch(`${location.origin}/getCoursesInYourDepartment?semester=${semester}&level=${level}&department=${getCoursesForDepartment[elective]}`)
+      if(!res.ok) return toast.error("error getting courses,please refresh and try again")
+
+      const data:courses[] = await res.json()
+      setCourseData(data)
+      
+      
+    } catch (error) {
+      console.log("error getting elective courses boy")
+      console.log(error)
+    }finally{
+      setLoadingCourses(false)
+    }
+  }
+
+
+  function getSelectedCourse(el:courses){
+    if(holdCourses === undefined) setHoldCourses([el])
+
+    if(holdCourses !== undefined){
+
+      const elementAlreadyInArray = [...holdCourses].includes(el)
+      if (elementAlreadyInArray) return
+
+      const oldValuesInArray:courses[] = [el, ...holdCourses]
+      setHoldCourses(oldValuesInArray)
+    } 
+
+  }
+
+  async function saveThe_selectedCourse(){
+    try {
+
+      if(!holdCourses) return toggleHidden()
+      if(!deptFrom) throw new Error("why is department null boy")
+      
+      setSaving(true)
+
+      const electiveDepartment = getCoursesForDepartment[elective]
+      const error = await saveElective(holdCourses,electiveDepartment,deptFrom,elective) 
+
+      if (error && holdCourses.length < 2) return toast.error("course already registered")
+      if (error && holdCourses.length > 1) return toast.error("one of the courses is  already registered")
+
+      return toggleHidden()
+      
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setSaving(false)
+    }
+  }
+
+
+  function deleteAselectedCourse(id:string){
+    if(!holdCourses) return
+
+    const hold:courses[] = [...holdCourses].filter(el => el.cid !== id )  
+    setHoldCourses(hold)
+
+  }
 
   
     return (
@@ -20,7 +116,7 @@ function SelectElective():JSX.Element {
                 Select a level to load its courses
               </p>
               <select
-                //onChange={getLevel}
+                onChange={getElective}
                 name="level"
                 className="w-[100%]    p-4 outline-none border-b-2 border-stone-200 space-y-2"
                 
@@ -41,14 +137,15 @@ function SelectElective():JSX.Element {
                 Select a level to load its courses
               </p>
               <select
-                //onChange={getLevel}
+              onClick={getLevelAndLoadCourses}
+                onChange={getLevelAndLoadCourses}
                 name="level"
                 className="w-[100%]  p-4 outline-none border-b-2 border-stone-200"
               >
                 <option value="noOption">no option</option>
-                <option value="100">100</option>
-                <option value="200">200</option>
-                <option value="300">300</option>
+                <option  value="100">100</option>
+                <option   value="200">200</option>
+                <option   value="300">300</option>
                 {/* <option value="500">500</option>
                 <option value="600">600</option> */}
               </select>
@@ -58,7 +155,7 @@ function SelectElective():JSX.Element {
   
           <div className="mt-8 ">
               <p className="  text-sm">
-                Major Courses in{" "}
+                Elecive Courses in{" "}
                 <span className=" font-semibold">
                   computer science
                 </span>
@@ -66,13 +163,24 @@ function SelectElective():JSX.Element {
   
               <div className=" md:grid md:grid-cols-[30fr,70fr] md:gap-x-4 w-full ">
                 <ul className="divide-y border  border-blue-800 h-[12rem] overflow-auto w-full  ">
+
+                  {
+                  elective.length > 0 && <p className="  text-sm">
+                  Minor Courses in{" "}
+                  <span className=" font-semibold">
+                    {departments[elective]}
+                  </span>
+                </p>
+                }
+
+
                   {
                     courseData.length < 1 && <p className="mt-1"> select a level to load courses</p>
                   }
   
   
   
-                  {/* {
+                  {
                     loadingCourses ? <LoadingCourses/> : 
                     courseData.map(el => (
                         <li key={Math.random()} 
@@ -82,7 +190,7 @@ function SelectElective():JSX.Element {
                             <span className="uppercase">{el.cid}</span>-<span className="capitalize">{el.courseName}</span>
                         </li>
                     ))
-                  } */}
+                  } 
   
                 </ul> 
                 
@@ -92,7 +200,7 @@ function SelectElective():JSX.Element {
                     <caption>
                       Courses in{" "}
                       <span className="uppercase">zeco suzuki </span>
-                      &apos;s Major
+                      &apos;s Elective
                     </caption>
                     <thead>
                       <tr>
@@ -104,21 +212,21 @@ function SelectElective():JSX.Element {
                     </thead>
   
                     <tbody>
-                      
-                        
-                            <tr key={Math.random()} className=" border border-stone-300 border-solid lg:hover:bg-stone-200 ">
+                    {
+                        holdCourses?.map((el,i) => (
+                          <tr key={Math.random()} className=" border border-stone-300 border-solid lg:hover:bg-stone-200 ">
                                 <td className=" font-light p-4 text-center uppercase">
-                                   csc405
+                                   {el.cid}
                                 </td>
                                 <td className=" font-light p-4 text-center uppercase">
-                                artificial intelligence
+                                {el.courseName}
                                 </td>
                                 <td className=" font-light p-4 text-center uppercase">
-                                6
+                                {el.creditValue}
                                 </td>
                                 <td className=" font-light p-4 text-center capitalize flex items-center justify-center">
                                   <button 
-                                  //onClick={()=> deleteAselectedCourse(el.cid)}
+                                  onClick={()=> deleteAselectedCourse(el.cid)}
                                   className=" bg-red-600 p-2 text-center text-white flex items-center justify-center shadow-lg rounded-sm lg:hover:scale-95"
                                   >
                                       {" "}
@@ -126,26 +234,8 @@ function SelectElective():JSX.Element {
                                   </button>
                                 </td>
                             </tr>
-                            <tr key={Math.random()} className=" border border-stone-300 border-solid lg:hover:bg-stone-200 ">
-                                <td className=" font-light p-4 text-center uppercase">
-                                   csc405
-                                </td>
-                                <td className=" font-light p-4 text-center uppercase">
-                                artificial intelligence
-                                </td>
-                                <td className=" font-light p-4 text-center uppercase">
-                                6
-                                </td>
-                                <td className=" font-light p-4 text-center capitalize flex items-center justify-center">
-                                  <button 
-                                  //onClick={()=> deleteAselectedCourse(el.cid)}
-                                  className=" bg-red-600 p-2 text-center text-white flex items-center justify-center shadow-lg rounded-sm lg:hover:scale-95"
-                                  >
-                                      {" "}
-                                      Remove
-                                  </button>
-                                </td>
-                            </tr>
+                        ))
+                      }
                        
                         
                     </tbody>
@@ -158,11 +248,11 @@ function SelectElective():JSX.Element {
   
           <div className="flex justify-center mt-2  md:mt-4">
         <button
-          // onClick={saveThe_selectedCourses}
+           onClick={saveThe_selectedCourse}
           //onClick={() => startTransition(() => saveThe_selectedCourses() )}
           className=" bg-[#198AC2] text-white text-sm md:text-base p-2 mt-4 w-[60%] shadow-lg rounded-md lg:hover:scale-95"
         >     
-            {isPending ? <span className="flex justify-center items-center  "><span className=" animate-spin"><ImSpinner8/></span>&nbsp;saving </span> :
+            {saving ? <span className="flex justify-center items-center  "><span className=" animate-spin"><ImSpinner8/></span>&nbsp;saving </span> :
             <span className="flex justify-center items-center "><IoSaveOutline />&nbsp;save changes</span>}
         </button>
       </div>

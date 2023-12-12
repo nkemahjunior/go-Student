@@ -58,6 +58,8 @@ export  const getCoursesForDepartment:any ={
 }
 
 
+
+
 export  const departmentsKeys:any ={
     eng:"eng",
     hist:"hist",
@@ -84,5 +86,22 @@ export  const departmentsKeys:any ={
     nur:"nur",
     midW:"midW",
     dent:"dent"
+
+}
+
+
+
+export  const departmentKeys:any ={
+    depteng:"english",
+    depthist:"history",
+
+
+    deptcsc:"computerScience",
+    deptphy:"physics",
+
+    deptceng:"computerEngineering",
+    deptmeng:"mechanicalEngineering",
+
+
 
 }

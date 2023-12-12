@@ -12,24 +12,24 @@ export async function dropMinor(courseID:string){
         const supabase = supabaseServer();
 
         const { data: { user },error:getuserError } = await supabase.auth.getUser()
-    
-        if(!getuserError){
-
-            const userData = await getStudentInfo()
-            if(!userData.minor) throw new Error("error getting user's minor boy")
-
-            const department = getCoursesForDepartment[userData.minor]            
-            const { error } = await supabase
-            .from(`${department}Minor`)
-            .delete()
-            .eq('studID', user?.id)
-            .eq('courseID',courseID)
-            console.log(error?.message)
-
-            if(error) throw new Error(error.message)
-        }
-
         if(getuserError) throw new Error(getuserError.message)
+
+
+        const userData = await getStudentInfo()
+        if(!userData.minor) throw new Error("error getting user's minor boy")
+
+        const department = getCoursesForDepartment[userData.minor]            
+        const { error } = await supabase
+        .from(`${department}Minor`)
+        .delete()
+        .eq('studID', user?.id)
+        .eq('courseID',courseID)
+     
+
+        if(error) throw new Error(error.message)
+     
+
+        
 
 
         

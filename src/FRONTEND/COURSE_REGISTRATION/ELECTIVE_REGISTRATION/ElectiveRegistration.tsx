@@ -4,14 +4,18 @@ import { useState } from "react";
 import DropElective from "./DropElective";
 import { IoIosAdd } from "react-icons/io";
 import SelectElective from "./SelectElective";
+import { electives } from "@/BACKEND/ElectiveRegistration/getElectiveCourses";
 
-function ElectiveRegistration():JSX.Element {
+interface props{
+  deptFrom:string
+  courses:electives[] | undefined | any[]
+}
+
+function ElectiveRegistration({deptFrom,courses}:props):JSX.Element {
     const [hidden, setHidden] = useState(true);
     const toggleHidden = () => setHidden((v) => !v);
   
-  
-  
-  
+
   
     const variants = {
       initial: {
@@ -83,7 +87,7 @@ function ElectiveRegistration():JSX.Element {
           >
             <table className=" w-full  border-stone-300 border border-collapse table-auto">
               <caption className="p-4 text-center capitalize text-white font-semibold bg-[#198AC2]">
-                Registered Major Courses
+                Registered Elective Courses
               </caption>
               <thead>
                 <tr>
@@ -98,33 +102,24 @@ function ElectiveRegistration():JSX.Element {
               <tbody>
                 
                   
-                    <tr key={Math.random()} className=" border border-stone-300 border-solid lg:hover:bg-stone-200 ">
-                      <td className=" font-light p-4 text-center">1</td>
-                      <td className=" font-light p-4 text-center uppercase">
-                        csc305
-                      </td>
-                      <td className=" font-light p-4 text-center uppercase">
-                        artificial intelligence
-                      </td>
-                      <td className=" font-light p-4 text-center">6</td>
-                      <td className=" font-light p-4 text-center capitalize flex items-center justify-center">
-                        <DropElective  />
-                      </td>
+              {
+                courses?.map((el,i) => (
+                  <tr key={Math.random()} className=" border border-stone-300 border-solid lg:hover:bg-stone-200 ">
+                    <td className=" font-light p-4 text-center">{i+1}</td>
+                    <td className=" font-light p-4 text-center uppercase">
+                      {el.courseID}
+                    </td>
+                    <td className=" font-light p-4 text-center uppercase">
+                      {el.courseName}
+                    </td>
+                    <td className=" font-light p-4 text-center">{el.creditValue}</td>
+                    <td className=" font-light p-4 text-center capitalize flex items-center justify-center">
+                      <DropElective cid={el.courseID} electDept={el.deptID} />
+                    </td>
                   </tr>
-                    <tr key={Math.random()} className=" border border-stone-300 border-solid lg:hover:bg-stone-200 ">
-                      <td className=" font-light p-4 text-center">1</td>
-                      <td className=" font-light p-4 text-center uppercase">
-                        csc305
-                      </td>
-                      <td className=" font-light p-4 text-center uppercase">
-                        artificial intelligence
-                      </td>
-                      <td className=" font-light p-4 text-center">6</td>
-                      <td className=" font-light p-4 text-center capitalize flex items-center justify-center">
-                        <DropElective  />
-                      </td>
-                  </tr>
-                
+                ))
+              }
+
   
                 
               </tbody>
@@ -136,7 +131,7 @@ function ElectiveRegistration():JSX.Element {
                 onClick={toggleHidden}
                 className=" bg-[#198AC2] text-white text-sm md:text-base p-2 mt-4 w-[60%] shadow-lg rounded-md lg:hover:scale-95"
               >
-                <span className="flex justify-center items-center"><IoIosAdd/> &nbsp;Add More Major Courses</span>
+                <span className="flex justify-center items-center"><IoIosAdd/> &nbsp;Add More Elective Courses</span>
               </button>
           </div>
             
@@ -154,7 +149,7 @@ function ElectiveRegistration():JSX.Element {
             className={`  ${hidden ? "hidden" : ""}      `}
           > 
   
-            <SelectElective />
+            <SelectElective toggleHidden={toggleHidden} deptFrom={deptFrom}  />
             
           </motion.div>
         </AnimatePresence>

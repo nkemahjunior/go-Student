@@ -19,11 +19,16 @@ function SelectMinor({toggleHidden,deptFrom}:props):JSX.Element {
     const[courseData,setCourseData] = useState<courses[]>([])
     const[holdCourses,setHoldCourses] = useState<courses[]>()
     const[saving,setSaving] = useState(false)
-    const [isPending,startTransition] = useTransition()
+
 
     const[minor,setMinor] = useState("")
 
-    const getMinor = (e:any) => setMinor(e.target.value)
+    //const getMinor = (e:any) => setMinor(e.target.value)
+
+    function getMinor(e:any){
+      if(minor !== e.target.value) setHoldCourses([])
+      setMinor(e.target.value)
+    }
 
     async function getLevelAndLoadCourses(e:any){
       try {
@@ -47,7 +52,7 @@ function SelectMinor({toggleHidden,deptFrom}:props):JSX.Element {
         
         
       } catch (error) {
-        console.log("error getting courses boy")
+        console.log("error getting  minor courses boy")
         console.log(error)
       }finally{
         setLoadingCourses(false)
@@ -80,8 +85,9 @@ function SelectMinor({toggleHidden,deptFrom}:props):JSX.Element {
           const minorDepartment = getCoursesForDepartment[minor] 
           const error = await saveMinor(holdCourses,minorDepartment,deptFrom,minor)
 
-          if (error && holdCourses.length < 2) return toast.error("course already registered")
-          if (error && holdCourses.length > 1) return toast.error("one of the courses is  already registered")
+          if(error === "hasMinor") return toast.error("you can not register courses from a different minor")
+          if (error === true && holdCourses.length < 2) return toast.error("course already registered")
+          if (error === true && holdCourses.length > 1) return toast.error("one of the courses is  already registered")
 
           return toggleHidden()
         
@@ -134,6 +140,7 @@ function SelectMinor({toggleHidden,deptFrom}:props):JSX.Element {
                   Select a level to load its courses
                 </p>
                 <select
+                  onClick={getLevelAndLoadCourses}
                   onChange={getLevelAndLoadCourses }
                   name="level"
                   className="w-[100%]  p-4 outline-none border-b-2 border-stone-200"
@@ -151,7 +158,7 @@ function SelectMinor({toggleHidden,deptFrom}:props):JSX.Element {
             <div className="mt-8 ">
               {
                 minor.length > 0 && <p className="  text-sm">
-                Major Courses in{" "}
+                Minor Courses in{" "}
                 <span className=" font-semibold">
                   {departments[minor]}
                 </span>
@@ -186,7 +193,7 @@ function SelectMinor({toggleHidden,deptFrom}:props):JSX.Element {
                     <caption>
                       Courses in{" "}
                       <span className="uppercase">zeco suzuki </span>
-                      &apos;s Major
+                      &apos;s Minor
                     </caption>
                     <thead>
                       <tr>

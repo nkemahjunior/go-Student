@@ -20,7 +20,6 @@ function MinorRegistration({deptFrom,courses}:props):JSX.Element {
 
 
 
-
   const variants = {
     initial: {
       width: "0%",
@@ -91,7 +90,7 @@ function MinorRegistration({deptFrom,courses}:props):JSX.Element {
         >
           <table className=" w-full  border-stone-300 border border-collapse table-auto">
             <caption className="p-4 text-center capitalize text-white font-semibold bg-[#198AC2]">
-              Registered Major Courses
+              Registered Minor Courses 
             </caption>
             <thead>
               <tr>
@@ -109,7 +108,7 @@ function MinorRegistration({deptFrom,courses}:props):JSX.Element {
               {
                 courses?.map((el,i) => (
                   <tr key={Math.random()} className=" border border-stone-300 border-solid lg:hover:bg-stone-200 ">
-                    <td className=" font-light p-4 text-center">1</td>
+                    <td className=" font-light p-4 text-center">{i+1}</td>
                     <td className=" font-light p-4 text-center uppercase">
                       {el.courseID}
                     </td>
@@ -134,7 +133,7 @@ function MinorRegistration({deptFrom,courses}:props):JSX.Element {
               onClick={toggleHidden}
               className=" bg-[#198AC2] text-white text-sm md:text-base p-2 mt-4 w-[60%] shadow-lg rounded-md lg:hover:scale-95"
             >
-              <span className="flex justify-center items-center"><IoIosAdd/> &nbsp;Add More Major Courses</span>
+              <span className="flex justify-center items-center"><IoIosAdd/> &nbsp;Add More Minor Courses</span>
             </button>
         </div>
           
@@ -165,7 +164,7 @@ function MinorRegistration({deptFrom,courses}:props):JSX.Element {
           {" "}
           <span></span>{" "}
           {hidden ? (
-            <span>Add More Major Courses</span>
+            <span>Add More Minor Courses</span>
           ) : (
             <span> save changes</span>
           )}

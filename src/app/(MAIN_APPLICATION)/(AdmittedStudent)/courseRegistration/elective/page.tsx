@@ -1,9 +1,18 @@
+import { getElectiveCourses } from "@/BACKEND/ElectiveRegistration/getElectiveCourses"
+import { getStudentInfo } from "@/BACKEND/StudentDetails/getStudentInfo"
 import ElectiveRegistration from "@/FRONTEND/COURSE_REGISTRATION/ELECTIVE_REGISTRATION/ElectiveRegistration"
 
-function page():JSX.Element {
+async function page() {
+
+    const data = await getStudentInfo()
+
+    const courses  = await getElectiveCourses()
+
+    //console.log(courses)
+
     return (
         <>
-            <ElectiveRegistration/>
+            <ElectiveRegistration deptFrom = {data?.department} courses={courses} />
         </>
     )
 }
