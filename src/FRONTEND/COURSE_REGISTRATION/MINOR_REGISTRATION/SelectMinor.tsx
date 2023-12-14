@@ -83,8 +83,11 @@ function SelectMinor({toggleHidden,deptFrom}:props):JSX.Element {
         
        
           const minorDepartment = getCoursesForDepartment[minor] 
-          const error = await saveMinor(holdCourses,minorDepartment,deptFrom,minor)
 
+          const holdCreditValues = holdCourses.map((el) => Number(el.creditValue) )
+          const error = await saveMinor(holdCourses,minorDepartment,deptFrom,minor,holdCreditValues)
+
+          if(error === "maximumCredit") return toast.error("you can not have morethan 36 credit values")
           if(error === "hasMinor") return toast.error("you can not register courses from a different minor")
           if (error === true && holdCourses.length < 2) return toast.error("course already registered")
           if (error === true && holdCourses.length > 1) return toast.error("one of the courses is  already registered")

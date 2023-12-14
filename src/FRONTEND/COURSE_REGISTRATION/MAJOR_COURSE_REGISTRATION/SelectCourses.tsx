@@ -76,42 +76,20 @@ function  SelectCourses( {department,name,toggleHidden,registeredCourses,minor}:
       if(!holdCourses) return toggleHidden()
       if(!department) throw new Error("why is department null boy")
 
-      // if (registeredCourses){
-
-      //   let loopLength
-      //   registeredCourses.length > holdCourses.length ? loopLength = registeredCourses.length : loopLength = holdCourses.length
-
-      //   for(let i =0; i < loopLength ; i++){
-          
-      //     if(registeredCourses[i] !== undefined  || holdCourses[i] !== undefined){
-      //       console.log(registeredCourses[i].courseID)
-      //       console.log(holdCourses[i].cid)
-      //       if(registeredCourses[i].courseID === holdCourses[i].cid){
-      //         console.log(registeredCourses[i].courseID)
-      //         console.log(holdCourses[i].cid)
-
-      //         console.log("enterd the block")
-            
-      //         alreadyRegisteredCourse = true;
-            
-      //         break;
-
-               
-      //       } 
-
-      //     }
-      //   } 
-
-      // }
-
-
       const dept = getCoursesForDepartment[department]
-      const error = await saveSelectedCourses(holdCourses,dept)
+
+      const holdCreditValues = holdCourses.map((el) => Number(el.creditValue) )
+
+
+    
+
+
+      const error = await saveSelectedCourses(holdCourses,dept,holdCreditValues)
    
       
-
-      if (error && holdCourses.length < 2) return toast.error("course already registered")
-      if (error && holdCourses.length > 1) return toast.error("one of the courses is  already registered")
+      if (error === "maximumCredit") return toast.error("you can not have morethan 36 credit values")
+      if (error === true && holdCourses.length < 2) return toast.error("course already registered")
+      if (error === true && holdCourses.length > 1) return toast.error("one of the courses is  already registered")
 
       //router.refresh()
       return toggleHidden()

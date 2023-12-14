@@ -5,9 +5,12 @@ import { supabaseServer } from "../General/supabaseServer"
 import { courses } from "@/FRONTEND/COURSE_REGISTRATION/MAJOR_COURSE_REGISTRATION/SelectCourses"
 import { getStudentInfo } from "../StudentDetails/getStudentInfo"
 import { getCoursesForDepartment } from "../CourseRegistrationDetails/departments"
+import { getTotalCredits } from "../General/getTotalCredits"
+import { getNewCredits } from "../General/getNewCredits"
+import { updateCredits } from "../General/updateCredits"
 
 
-export async function saveElective(selectedCourses:courses[],department:string,deptFrom:string,electiveDept:string){
+export async function saveElective(selectedCourses:courses[],department:string,deptFrom:string,electiveDept:string,creditValueArr:number[]){
 
     let noError = false
     try {
@@ -22,6 +25,12 @@ export async function saveElective(selectedCourses:courses[],department:string,d
 
         if(!studentInfo.department) noError = true
         if(!studentInfo.department) throw new Error("error getting student info in the saveElective code block")
+
+        const currentCredit = await getTotalCredits()
+        if(currentCredit   &&  currentCredit >= 36) return "maximumCredit"
+
+        const totalCredits = getNewCredits(currentCredit,creditValueArr)
+        if(totalCredits > 36 ) return "maximumCredit"
 
         const studentDepartment = getCoursesForDepartment[studentInfo.department]
 
@@ -58,6 +67,9 @@ export async function saveElective(selectedCourses:courses[],department:string,d
             noError=true
             throw new Error(error.message)
         }
+
+
+        await updateCredits(totalCredits,noError)
 
 
 

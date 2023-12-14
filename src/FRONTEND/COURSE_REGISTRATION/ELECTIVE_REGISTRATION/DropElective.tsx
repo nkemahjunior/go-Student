@@ -3,7 +3,7 @@ import { useState, useTransition } from "react"
 import { ImSpinner8 } from "react-icons/im"
 import { MdDelete } from "react-icons/md"
 
-function DropElective({cid,electDept}:{cid:string,electDept:string}):JSX.Element {
+function DropElective({cid,electDept,creditValue}:{cid:string,electDept:string,creditValue:number}):JSX.Element {
     const [isPending,startTransition] = useTransition()
     
 
@@ -15,7 +15,7 @@ function DropElective({cid,electDept}:{cid:string,electDept:string}):JSX.Element
 
           //setDropping(true)
     
-          await dropElectiveCourse(courseID,electDept)
+          await dropElectiveCourse(courseID,electDept,creditValue)
           //router.refresh()
     
         } catch (error) {

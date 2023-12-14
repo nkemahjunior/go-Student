@@ -82,8 +82,11 @@ function SelectElective({toggleHidden,deptFrom}:props):JSX.Element {
       setSaving(true)
 
       const electiveDepartment = getCoursesForDepartment[elective]
-      const error = await saveElective(holdCourses,electiveDepartment,deptFrom,elective) 
 
+      const holdCreditValues = holdCourses.map((el) => Number(el.creditValue) )
+      const error = await saveElective(holdCourses,electiveDepartment,deptFrom,elective,holdCreditValues) 
+
+      if (error === "maximumCredit") return toast.error("you can not have morethan 36 credits")
       if (error && holdCourses.length < 2) return toast.error("course already registered")
       if (error && holdCourses.length > 1) return toast.error("one of the courses is  already registered")
 

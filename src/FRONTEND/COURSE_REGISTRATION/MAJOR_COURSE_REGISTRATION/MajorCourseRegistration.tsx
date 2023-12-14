@@ -118,7 +118,7 @@ function MajorCourseRegistration({department,name, registeredCourses}: {departme
                     </td>
                     <td className=" font-light p-4 text-center">6</td>
                     <td className=" font-light p-4 text-center capitalize flex items-center justify-center">
-                      <DropButton cid={el.courseID} department={department} />
+                      <DropButton cid={el.courseID} department={department} creditValue = {el.creditValue} />
                     </td>
                 </tr>
                 ))

@@ -114,7 +114,7 @@ function ElectiveRegistration({deptFrom,courses}:props):JSX.Element {
                     </td>
                     <td className=" font-light p-4 text-center">{el.creditValue}</td>
                     <td className=" font-light p-4 text-center capitalize flex items-center justify-center">
-                      <DropElective cid={el.courseID} electDept={el.deptID} />
+                      <DropElective cid={el.courseID} electDept={el.deptID} creditValue={el.creditValue} />
                     </td>
                   </tr>
                 ))

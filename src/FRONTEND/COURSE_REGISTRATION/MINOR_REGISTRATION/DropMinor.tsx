@@ -6,7 +6,7 @@ import { useState, useTransition } from "react"
 import { ImSpinner8 } from "react-icons/im"
 import { MdDelete } from "react-icons/md"
 
-function DropMinor({cid}:{cid:string}):JSX.Element {
+function DropMinor({cid,creditValue}:{cid:string,creditValue:number}):JSX.Element {
     const [isPending,startTransition] = useTransition()
     
 
@@ -18,7 +18,7 @@ function DropMinor({cid}:{cid:string}):JSX.Element {
 
           //setDropping(true)
     
-          await dropMinor(courseID)
+          await dropMinor(courseID,creditValue)
           //router.refresh()
     
         } catch (error) {

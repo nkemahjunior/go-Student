@@ -117,7 +117,7 @@ function MinorRegistration({deptFrom,courses}:props):JSX.Element {
                     </td>
                     <td className=" font-light p-4 text-center">{el.creditValue}</td>
                     <td className=" font-light p-4 text-center capitalize flex items-center justify-center">
-                      <DropMinor cid={el.courseID}  />
+                      <DropMinor cid={el.courseID} creditValue = {el.creditValue}  />
                     </td>
                   </tr>
                 ))

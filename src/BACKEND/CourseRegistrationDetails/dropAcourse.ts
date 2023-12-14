@@ -2,15 +2,23 @@
 
 import { revalidatePath } from "next/cache";
 import { supabaseServer } from "../General/supabaseServer"
+import { getTotalCredits } from "../General/getTotalCredits";
+import { updateCredits } from "../General/updateCredits";
 
-export async function dropAcourse(courseID:string,department:string){
+export async function dropAcourse(courseID:string,department:string,creditValue:number){
     try {
-
         const supabase = supabaseServer();
 
         const { data: { user },error:getuserError } = await supabase.auth.getUser()
+
+
     
         if(!getuserError){
+
+            const currentCredit = await getTotalCredits()
+            const newCredit = currentCredit - creditValue
+            await updateCredits(newCredit,false)
+            //if(updateError) throw new Error("error reducing credit value in dropAcourse function boy")
             
             const { error } = await supabase
             .from(`${department}Students`)

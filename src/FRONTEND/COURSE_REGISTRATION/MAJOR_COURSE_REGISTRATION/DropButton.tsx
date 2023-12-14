@@ -7,7 +7,7 @@ import { ImSpinner8 } from "react-icons/im"
 import { MdDelete } from "react-icons/md"
 
 
-function DropButton({cid,department}:{cid:string,department:string | null | undefined}):JSX.Element {
+function DropButton({cid,department,creditValue}:{cid:string,department:string | null | undefined,creditValue:number}):JSX.Element {
 
     const [isPending,startTransition] = useTransition()
     
@@ -23,7 +23,7 @@ function DropButton({cid,department}:{cid:string,department:string | null | unde
           const dept = getCoursesForDepartment[department]
           setDropping(true)
     
-          await dropAcourse(courseID,dept)
+          await dropAcourse(courseID,dept,creditValue)
           //router.refresh()
     
         } catch (error) {
