@@ -94,11 +94,11 @@ function MinorRegistration({deptFrom,courses}:props):JSX.Element {
             </caption>
             <thead>
               <tr>
-                <th className="p-4 ">S/N</th>
-                <th className="p-4">Course Code</th>
-                <th className="p-4">Course Title</th>
-                <th className="p-4">Credit Value</th>
-                <th className="p-4">Action</th>
+                <th className="p-4 whitespace-nowrap text-sm ">S/N</th>
+                <th className="p-4 whitespace-nowrap text-sm">Course Code</th>
+                <th className="p-4 whitespace-nowrap text-sm">Course Title</th>
+                <th className="p-4 whitespace-nowrap text-sm">Credit Value</th>
+                <th className="p-4 whitespace-nowrap text-sm">Action</th>
               </tr>
             </thead>
 
@@ -112,7 +112,7 @@ function MinorRegistration({deptFrom,courses}:props):JSX.Element {
                     <td className=" font-light p-4 text-center uppercase">
                       {el.courseID}
                     </td>
-                    <td className=" font-light p-4 text-center uppercase">
+                    <td className=" font-light p-4 text-center uppercase whitespace-nowrap">
                       {el.courseName}
                     </td>
                     <td className=" font-light p-4 text-center">{el.creditValue}</td>

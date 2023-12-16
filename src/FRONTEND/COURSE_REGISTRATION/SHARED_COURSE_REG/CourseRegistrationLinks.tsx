@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 function CourseRegistrationLinks({ children,}: {children: React.ReactNode; }):JSX.Element {
 
     const pathname = usePathname()
+  
 
     const links = ["/courseRegistration/major","/courseRegistration/minor","/courseRegistration/elective","/courseRegistration/required",
     "/courseRegistration/finalRegistered"]
@@ -63,7 +64,7 @@ function CourseRegistrationLinks({ children,}: {children: React.ReactNode; }):JS
                         </div>
                         <div className="md:w-[40%] flex justify-center items-center">
                             {
-                                currentLinkIndex === links.length || <Link href={`${links[currentLinkIndex + 1]}`} className="text-xs md:text-base w-[70%] text-center  p-1 md:p-2  flex justify-center items-center bg-[#47B2E7]    lg:hover:scale-95">Next&gt;&gt; {linksTitle[currentLinkIndex + 1]}
+                                currentLinkIndex === links.length -1 || <Link href={`${links[currentLinkIndex + 1]}`} className="text-xs md:text-base w-[70%] text-center  p-1 md:p-2  flex justify-center items-center bg-[#47B2E7]    lg:hover:scale-95">Next&gt;&gt; {linksTitle[currentLinkIndex + 1]}
                                 </Link>
                             }
                         </div>
@@ -71,6 +72,8 @@ function CourseRegistrationLinks({ children,}: {children: React.ReactNode; }):JS
                     </div>
             
             </div>
+
+
         </div>
     )
 }

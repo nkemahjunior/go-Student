@@ -91,11 +91,11 @@ function ElectiveRegistration({deptFrom,courses}:props):JSX.Element {
               </caption>
               <thead>
                 <tr>
-                  <th className="p-4 ">S/N</th>
-                  <th className="p-4">Course Code</th>
-                  <th className="p-4">Course Title</th>
-                  <th className="p-4">Credit Value</th>
-                  <th className="p-4">Action</th>
+                  <th className="p-4 text-sm whitespace-nowrap ">S/N</th>
+                  <th className="p-4 text-sm whitespace-nowrap">Course Code</th>
+                  <th className="p-4 text-sm whitespace-nowrap">Course Title</th>
+                  <th className="p-4 text-sm whitespace-nowrap">Credit Value</th>
+                  <th className="p-4 text-sm whitespace-nowrap">Action</th>
                 </tr>
               </thead>
   
@@ -109,7 +109,7 @@ function ElectiveRegistration({deptFrom,courses}:props):JSX.Element {
                     <td className=" font-light p-4 text-center uppercase">
                       {el.courseID}
                     </td>
-                    <td className=" font-light p-4 text-center uppercase">
+                    <td className=" font-light p-4 text-center uppercase whitespace-nowrap">
                       {el.courseName}
                     </td>
                     <td className=" font-light p-4 text-center">{el.creditValue}</td>

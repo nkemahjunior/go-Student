@@ -1,7 +1,7 @@
 function page():JSX.Element {
     return (
-        <div>
-            required courses
+        <div className=" h-screen flex items-center justify-center">
+           no required courses at the moment
         </div>
     )
 }

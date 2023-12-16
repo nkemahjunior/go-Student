@@ -1,5 +1,6 @@
 import { checkIfUserIsStudent } from "@/BACKEND/ProtectingRoutes/checkIfUserIsStudent";
 import { getStudentInfo } from "@/BACKEND/StudentDetails/getStudentInfo";
+import MainFooter from "@/FRONTEND/GENERAL_UI/MainFooter";
 import MainHeader from "@/FRONTEND/GENERAL_UI/MainHeader";
 import { redirect } from "next/navigation";
 
@@ -10,32 +11,27 @@ export default async function Applicationlayout({
   children: React.ReactNode;
 }) {
 
-    const admitionDetail = await checkIfUserIsStudent() 
-    const admittedOrNot = admitionDetail?.at(0)?.admissionAccepted
+  const admitionDetail = await checkIfUserIsStudent() 
+  const admittedOrNot = admitionDetail?.at(0)?.admissionAccepted
 
-    // console.log("---------------------------////////////////////------------------------------------------------------------------")
-    // console.log("---------------------------------------------------------------------------------------------")
+  if(admittedOrNot === false || admittedOrNot === null || admittedOrNot === undefined) {
 
-    // console.log(admitionDetail)
+    redirect('/generalAdmission')
 
+  }
+  else if(admittedOrNot === true){ 
+    
+    const data = await getStudentInfo()
 
+    
+    return( 
+    <>
+      <MainHeader photo = {data?.photo} name={data?.name}/>
+      {children}
 
-    if(admittedOrNot === false || admittedOrNot === null || admittedOrNot === undefined) {
-      //console.log("redirecting")
-      redirect('/generalAdmission')
-
-    }
-    else if(admittedOrNot === true){ 
-      
-      const data = await getStudentInfo()
-      //const {photo,name}= data
-      
-      return( 
-      <>
-        <MainHeader photo = {data?.photo} name={data?.name}/>
-        {children}
-      </>
-      )
-    }
+      <MainFooter/>
+    </>
+    )
+  }
 
 }

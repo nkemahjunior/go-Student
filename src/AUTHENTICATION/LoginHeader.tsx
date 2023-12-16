@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import { FaUniversity } from "react-icons/fa"
 import { MdEmail } from "react-icons/md"
 
@@ -34,7 +35,7 @@ function LoginHeader():JSX.Element {
             <div className="flex justify-end w-full md:flex-none md:justify-normal md:w-fit md:shadow-md">
                 <div className="flex  items-baseline p-2 bg-[#0293DB] w-fit  space-x-1">
                     <FaUniversity style={{color:"#fff"}}/>
-                    <p className="  text-white "> Admission</p>
+                    <Link href={"/apply"} className="block" ><p className="  text-white "> Admission</p></Link>
                 </div>
             </div>
         </div>

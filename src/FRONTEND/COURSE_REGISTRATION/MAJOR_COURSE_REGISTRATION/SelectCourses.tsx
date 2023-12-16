@@ -176,10 +176,10 @@ function  SelectCourses( {department,name,toggleHidden,registeredCourses,minor}:
                   </caption>
                   <thead>
                     <tr>
-                      <th className="p-4 ">Course code</th>
-                      <th className="p-4 ">Course Title</th>
-                      <th className="p-4 ">credit Value</th>
-                      <th className="p-4 ">Remove</th>
+                      <th className="p-4 whitespace-nowrap text-sm ">Course code</th>
+                      <th className="p-4 whitespace-nowrap text-sm ">Course Title</th>
+                      <th className="p-4 whitespace-nowrap text-sm ">credit Value</th>
+                      <th className="p-4 whitespace-nowrap text-sm ">Remove</th>
                     </tr>
                   </thead>
 
@@ -190,7 +190,7 @@ function  SelectCourses( {department,name,toggleHidden,registeredCourses,minor}:
                               <td className=" font-light p-4 text-center uppercase">
                                   {el.cid}
                               </td>
-                              <td className=" font-light p-4 text-center uppercase">
+                              <td className=" font-light p-4 text-center uppercase  whitespace-nowrap">
                               {el.courseName}
                               </td>
                               <td className=" font-light p-4 text-center uppercase">
