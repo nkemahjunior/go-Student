@@ -8,6 +8,7 @@ async function FinalRegistered() {
 
     const data = await getAllRegisteredCourses()
     const studentInfo = await getStudentInfo()
+
     const semester = getSemester()
     const date = new Date()
     const currentYear = date.getFullYear()
@@ -16,6 +17,8 @@ async function FinalRegistered() {
     const major = data?.majorAndTeachers
     const minor = data?.minorAndTeachers
     const elective = data?.electiveAndTeachers
+
+    
 
 
     
@@ -27,13 +30,13 @@ async function FinalRegistered() {
                 <div className="mt-4 grid grid-cols-[1fr,1fr,1fr] space-x-8 overflow-x-auto  pl-8 ">
 
                         <div className=" space-y-4  ">
-                            <div className="w-fit font-light text-sm text-center  ">Name:<span className="uppercase  ">{studentInfo.name}</span> 
+                            <div className="w-fit font-light text-sm text-center  ">Name:<span className="uppercase  ">{studentInfo?.name}</span> 
                             <p className="border-b-[1px] border-solid border-stone-200 w-[15rem] mt-2"></p></div>
 
-                            <div className="w-fit font-light text-sm text-center">Major:  {departments[studentInfo.department]}
+                            <div className="w-fit font-light text-sm text-center">Major:  {departments[studentInfo?.department]}
                             <p className="border-b-[1px] border-solid border-stone-200 w-[15rem] mt-2"></p></div>
 
-                            <div className="w-fit font-light text-sm text-center">Minor:{departments[studentInfo.minor] || "none"}<p className="border-b-[1px] border-solid border-stone-200 w-[15rem] mt-2"></p></div>
+                            <div className="w-fit font-light text-sm text-center">Minor:{departments[studentInfo?.minor] || "none"}<p className="border-b-[1px] border-solid border-stone-200 w-[15rem] mt-2"></p></div>
                         </div>
 
                         <div className="  space-y-8">
@@ -48,7 +51,7 @@ async function FinalRegistered() {
                         </div>
 
                         <div className="space-y-4">
-                            <div className="uppercase w-fit font-light text-sm text-center">department:{departments[studentInfo.department]}<p className="border-b-[1px] border-solid border-stone-200 w-[17rem] mt-2"></p></div>
+                            <div className="uppercase w-fit font-light text-sm text-center">department:{departments[studentInfo?.department]}<p className="border-b-[1px] border-solid border-stone-200 w-[17rem] mt-2"></p></div>
                             <div className="w-fit font-light text-sm text-center  ">{semester === "sem1" ?   "First Semester":"Second Semester" }<p className="border-b-[1px] border-solid border-stone-200 w-[17rem] mt-2"></p></div>
                             <div className="w-fit font-light text-sm text-center  ">Acamedic Year: {currentYear}/{currentYear + 1}<p className="border-b-[1px] border-solid border-stone-200 w-[17rem] mt-2"></p></div>
                         </div>
@@ -80,7 +83,7 @@ async function FinalRegistered() {
                             <tr className="bg-stone-400 ">
                                 <td className=" font-light p-4  bg-stone-400  text-white  ">&nbsp;</td>
                                 <td className=" font-light p-4  bg-stone-400  text-white  ">&nbsp;</td>
-                                <td className=" font-serif p-4  bg-stone-400  text-white text-end ">Major Courses</td>
+                                <td className=" font-serif p-4  bg-stone-400  text-white text-end whitespace-nowrap">Major Courses</td>
                                 <td className=" font-light p-4  bg-stone-400  text-white  ">&nbsp;</td>
                                 <td className=" font-light p-4  bg-stone-400  text-white  ">&nbsp;</td>
                                 <td className=" font-light p-4  bg-stone-400  text-white  ">&nbsp;</td>
@@ -115,7 +118,7 @@ async function FinalRegistered() {
                             <tr className="bg-stone-400 ">
                                 <td className=" font-light p-4 bg-stone-400  text-white  ">&nbsp;</td>
                                 <td className=" font-light p-4 bg-stone-400  text-white  ">&nbsp;</td>
-                                <td className=" font-serif p-4 bg-stone-400  text-white text-end ">Minor Courses</td>
+                                <td className=" font-serif p-4 bg-stone-400  text-white text-end whitespace-nowrap">Minor Courses</td>
                                 <td className=" font-light p-4 bg-stone-400  text-white  ">&nbsp;</td>
                                 <td className=" font-light p-4 bg-stone-400  text-white  ">&nbsp;</td>
                                 <td className=" font-light p-4 bg-stone-400  text-white  ">&nbsp;</td>
@@ -153,7 +156,7 @@ async function FinalRegistered() {
                             <tr className="bg-stone-400 ">
                                 <td className=" font-light p-4 bg-stone-400  text-white  ">&nbsp;</td>
                                 <td className=" font-light p-4 bg-stone-400  text-white  ">&nbsp;</td>
-                                <td className=" font-serif p-4 bg-stone-400  text-white text-end ">Elective Courses</td>
+                                <td className=" font-serif p-4 bg-stone-400  text-white text-end whitespace-nowrap">Elective Courses</td>
                                 <td className=" font-light p-4 bg-stone-400  text-white  ">&nbsp;</td>
                                 <td className=" font-light p-4 bg-stone-400  text-white  ">&nbsp;</td>
                                 <td className=" font-light p-4 bg-stone-400  text-white  ">&nbsp;</td>

@@ -29,20 +29,20 @@ function CourseRegistrationLinks({ children,}: {children: React.ReactNode; }):JS
 
                     <div className=" flex space-x-2 md:space-x-0    bg-stone-100   w-fit md:w-full ">
 
-                        <div className={ ` ${pathname ==="/courseRegistration/major" && "border-b-4 border-[#198AC2] border-solid" }  md:w-full md:flex md:justify-center md:items-center md:hover:bg-stone-200`}>
+                        <div className={ `text-sm md:text-base ${pathname ==="/courseRegistration/major" && "border-b-4 border-[#198AC2] border-solid" }  md:w-full md:flex md:justify-center md:items-center md:hover:bg-stone-200`}>
                         <Link  href={"/courseRegistration/major"}  className={`  md:py-4 md:pr-4 `}>Register Major Courses</Link>
                         </div>
-                        <div className={`${pathname ==="/courseRegistration/minor" && "border-b-4 border-[#198AC2] border-solid" }  md:w-full md:flex md:justify-center md:items-center md:hover:bg-stone-200`}>
+                        <div className={`text-sm md:text-base ${pathname ==="/courseRegistration/minor" && "border-b-4 border-[#198AC2] border-solid" }  md:w-full md:flex md:justify-center md:items-center md:hover:bg-stone-200`}>
                         <Link href={"/courseRegistration/minor"}   className={`md:py-4 md:pr-4 `}> Register Minor Courses</Link>
                         </div>
-                        <div className={`${pathname ==="/courseRegistration/elective" && "border-b-4 border-[#198AC2] border-solid" } 
+                        <div className={`text-sm md:text-base ${pathname ==="/courseRegistration/elective" && "border-b-4 border-[#198AC2] border-solid" } 
                         md:w-full md:flex md:justify-center md:items-center md:hover:bg-stone-200`}>
                         <Link href={"/courseRegistration/elective"}   className={`md:py-4 md:pr-4 `}> Register Elective Courses</Link>
                         </div>
-                        <div className={` ${pathname ==="/courseRegistration/required" && "border-b-4 border-[#198AC2] border-solid" } md:w-full md:flex md:justify-center md:items-center md:hover:bg-stone-200`}>
+                        <div className={`text-sm md:text-base ${pathname ==="/courseRegistration/required" && "border-b-4 border-[#198AC2] border-solid" } md:w-full md:flex md:justify-center md:items-center md:hover:bg-stone-200`}>
                         <Link  href={"/courseRegistration/required"}   className={`md:py-4 md:pr-4 `}> Registered Required Courses</Link>
-                        </div>
-                        <div className={`${pathname ==="/courseRegistration/finalRegistered" && "border-b-4 border-[#198AC2] border-solid" }
+                        </div> 
+                        <div className={`text-sm md:text-base ${pathname ==="/courseRegistration/finalRegistered" && "border-b-4 border-[#198AC2] border-solid" }
                         md:w-full md:flex md:justify-center md:items-center md:hover:bg-stone-200`}>
                         <Link href={"/courseRegistration/finalRegistered"}   className={`md:py-4 md:pr-4 `}> Final Registered Courses</Link>
                         </div>

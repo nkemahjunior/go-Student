@@ -39,7 +39,7 @@ export async function getAllRegisteredCourses(){
         // console.log(major)
 
         if(major){
-            if(major.length < 1 ) return
+            
 
             await Promise.all(
                 major.map(async (el) => {
@@ -70,7 +70,7 @@ export async function getAllRegisteredCourses(){
 
 
         if(minor){
-            if(minor.length < 1 ) return
+            
 
            await Promise.all(
                 minor.map( async (el) => {
@@ -98,7 +98,7 @@ export async function getAllRegisteredCourses(){
 
 
         if(elective){
-            if(elective.length < 1) return
+            
 
             await Promise.all(elective.map( async (el) => {
                 let { data, error } = await supabase

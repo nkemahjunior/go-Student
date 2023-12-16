@@ -54,9 +54,9 @@ function MainHeader({photo,name}:{photo:string| null | undefined,name:string| nu
                 
                 <div>
                     <div className="  flex md:justify-between   space-x-4 w-full overflow-x-scroll lg:overflow-auto pt-4">
-                            <Link className={`${pathname === "/student" ? " p-2 bg-white text-[#0293DB] ":"text-white"} ${pathname === "/student" ? " p-2 bg-white text-[#0293DB] ":"text-white"}  capitalize font-extralight font-serif `} href={"/student"}>HOME</Link>
+                            <Link className={`${pathname === "/student" ? " p-2 bg-white text-[#0293DB] ":"text-white"} ${pathname === "/student" ? " p-2 bg-white text-[#0293DB] ":"text-white"}  capitalize font-extralight font-serif text-sm md:text-base `} href={"/student"}>HOME</Link>
                             
-                            <Link className={`  
+                            <Link className={` text-sm md:text-base 
                             ${pathname.startsWith('/courseRegistration') ? " p-2 bg-white text-[#0293DB] " :
                             "text-white"} capitalize font-extralight font-serif flex flex-nowrap `}   
                             href={"/courseRegistration/major"}
@@ -64,13 +64,13 @@ function MainHeader({photo,name}:{photo:string| null | undefined,name:string| nu
                                 COURSE&nbsp;REGISTRATION
                             </Link>
 
-                            <Link className={` ${pathname === "/formB" ? " p-2 bg-white text-[#0293DB] ":"text-white"} capitalize font-extralight font-serif flex flex-nowrap `}  href={"/formB"}>FORM&nbsp;B</Link>
+                            <Link className={`text-sm md:text-base ${pathname === "/formB" ? " p-2 bg-white text-[#0293DB] ":"text-white"} capitalize font-extralight font-serif flex flex-nowrap `}  href={"/formB"}>FORM&nbsp;B</Link>
 
-                            <Link className={` ${pathname === "/caResults" ? " p-2 bg-white text-[#0293DB] ":"text-white"} capitalize font-extralight font-serif flex flex-nowrap `}  href={"/caResults"}>CA&nbsp;RESULTS</Link>
+                            <Link className={`text-sm md:text-base ${pathname === "/caResults" ? " p-2 bg-white text-[#0293DB] ":"text-white"} capitalize font-extralight font-serif flex flex-nowrap `}  href={"/caResults"}>CA&nbsp;RESULTS</Link>
 
-                            <Link className={` ${pathname === "/finalResults" ? " p-2 bg-white text-[#0293DB] ":"text-white"} capitalize font-extralight font-serif flex flex-nowrap `}  href={"/finalResults"}>FINAL&nbsp;RESULTS</Link>
+                            <Link className={`text-sm md:text-base ${pathname === "/finalResults" ? " p-2 bg-white text-[#0293DB] ":"text-white"} capitalize font-extralight font-serif flex flex-nowrap `}  href={"/finalResults"}>FINAL&nbsp;RESULTS</Link>
 
-                            <Link className={` ${pathname === "/payFees" ? " p-2 bg-white text-[#0293DB] ":"text-white"} capitalize font-extralight font-serif flex flex-nowrap `}  href={"/payFees"}>PAY&nbsp;FEES</Link>
+                            <Link className={`text-sm md:text-base ${pathname === "/payFees" ? " p-2 bg-white text-[#0293DB] ":"text-white"} capitalize font-extralight font-serif flex flex-nowrap `}  href={"/payFees"}>PAY&nbsp;FEES</Link>
                             
                     </div>
 
