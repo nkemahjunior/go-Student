@@ -11,9 +11,10 @@ import { saveElective } from "@/BACKEND/ElectiveRegistration/saveElective"
 interface props{
   toggleHidden:any
   deptFrom:string
+  name:string
 }
 
-function SelectElective({toggleHidden,deptFrom}:props):JSX.Element {
+function SelectElective({toggleHidden,deptFrom,name}:props):JSX.Element {
 
   const[loadingCourses,setLoadingCourses] = useState(false)
   const[courseData,setCourseData] = useState<courses[]>([])
@@ -121,7 +122,7 @@ function SelectElective({toggleHidden,deptFrom}:props):JSX.Element {
               <select
                 onChange={getElective}
                 name="level"
-                className="w-[100%]    p-4 outline-none border-b-2 border-stone-200 space-y-2"
+                className="w-[100%]    p-4 outline-none border-b-2 border-stone-200 space-y-2  h-[2px]"
                 
               >
                 <option value="noOption">noOption</option>
@@ -143,7 +144,7 @@ function SelectElective({toggleHidden,deptFrom}:props):JSX.Element {
               onClick={getLevelAndLoadCourses}
                 onChange={getLevelAndLoadCourses}
                 name="level"
-                className="w-[100%]  p-4 outline-none border-b-2 border-stone-200"
+                className="w-[100%]  p-4 outline-none border-b-2 border-stone-200  h-[2px]"
               >
                 <option value="noOption">no option</option>
                 <option  value="100">100</option>
@@ -167,14 +168,7 @@ function SelectElective({toggleHidden,deptFrom}:props):JSX.Element {
               <div className=" md:grid md:grid-cols-[30fr,70fr] md:gap-x-4 w-full ">
                 <ul className="divide-y border  border-blue-800 h-[12rem] overflow-auto w-full  ">
 
-                  {
-                  elective.length > 0 && <p className="  text-sm">
-                  Minor Courses in{" "}
-                  <span className=" font-semibold">
-                    {departments[elective]}
-                  </span>
-                </p>
-                }
+                  
 
 
                   {
@@ -200,9 +194,9 @@ function SelectElective({toggleHidden,deptFrom}:props):JSX.Element {
   
                 <div  className="w-full overflow-auto">
                   <table className=" w-full   border-stone-300 border border-collapse table-auto  ">
-                    <caption>
+                    <caption className="mt-4 md:mt-0">
                       Courses in{" "}
-                      <span className="uppercase">zeco suzuki </span>
+                      <span className="uppercase">{name} </span>
                       &apos;s Elective
                     </caption>
                     <thead>

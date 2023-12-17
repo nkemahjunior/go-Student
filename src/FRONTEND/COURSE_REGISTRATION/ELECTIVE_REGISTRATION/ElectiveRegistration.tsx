@@ -9,9 +9,10 @@ import { electives } from "@/BACKEND/ElectiveRegistration/getElectiveCourses";
 interface props{
   deptFrom:string
   courses:electives[] | undefined | any[]
+  name:string
 }
 
-function ElectiveRegistration({deptFrom,courses}:props):JSX.Element {
+function ElectiveRegistration({deptFrom,courses,name}:props):JSX.Element {
     const [hidden, setHidden] = useState(true);
     const toggleHidden = () => setHidden((v) => !v);
   
@@ -149,7 +150,7 @@ function ElectiveRegistration({deptFrom,courses}:props):JSX.Element {
             className={`  ${hidden ? "hidden" : ""}      `}
           > 
   
-            <SelectElective toggleHidden={toggleHidden} deptFrom={deptFrom}  />
+            <SelectElective toggleHidden={toggleHidden} deptFrom={deptFrom}  name={name} />
             
           </motion.div>
         </AnimatePresence>

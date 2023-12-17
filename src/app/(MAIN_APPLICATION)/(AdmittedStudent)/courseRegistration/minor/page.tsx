@@ -20,7 +20,7 @@ async function page(){
 
     return (
         <>
-            <MinorRegistration deptFrom={data?.department} courses = {courses} />
+            <MinorRegistration deptFrom={data?.department} courses = {courses} name={data?.name} />
         </>
     )
 }

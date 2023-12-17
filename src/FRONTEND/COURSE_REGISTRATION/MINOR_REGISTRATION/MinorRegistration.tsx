@@ -10,9 +10,10 @@ import { minor } from "@/app/(MAIN_APPLICATION)/(AdmittedStudent)/courseRegistra
 interface props{
   deptFrom :string
   courses:minor[] | null | undefined
+  name:string
 }
 
-function MinorRegistration({deptFrom,courses}:props):JSX.Element {
+function MinorRegistration({deptFrom,courses,name}:props):JSX.Element {
 
   const [hidden, setHidden] = useState(true);
   const toggleHidden = () => setHidden((v) => !v);
@@ -151,7 +152,7 @@ function MinorRegistration({deptFrom,courses}:props):JSX.Element {
           className={`  ${hidden ? "hidden" : ""}      `}
         > 
 
-          <SelectMinor toggleHidden={toggleHidden} deptFrom={deptFrom} />
+          <SelectMinor toggleHidden={toggleHidden} deptFrom={deptFrom} name={name}/>
           
         </motion.div>
       </AnimatePresence>

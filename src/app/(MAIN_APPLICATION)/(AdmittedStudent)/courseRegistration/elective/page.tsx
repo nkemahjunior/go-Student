@@ -12,7 +12,7 @@ async function page() {
 
     return (
         <>
-            <ElectiveRegistration deptFrom = {data?.department} courses={courses} />
+            <ElectiveRegistration deptFrom = {data?.department} courses={courses} name={data?.name} />
         </>
     )
 }

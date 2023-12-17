@@ -12,9 +12,10 @@ import { getStudentInfo } from "@/BACKEND/StudentDetails/getStudentInfo"
 interface props{
   toggleHidden:any
   deptFrom:string
+  name:string
 }
 
-function SelectMinor({toggleHidden,deptFrom}:props):JSX.Element {
+function SelectMinor({toggleHidden,deptFrom,name}:props):JSX.Element {
     const[loadingCourses,setLoadingCourses] = useState(false)
     const[courseData,setCourseData] = useState<courses[]>([])
     const[holdCourses,setHoldCourses] = useState<courses[]>()
@@ -124,7 +125,7 @@ function SelectMinor({toggleHidden,deptFrom}:props):JSX.Element {
                 <select
                   onChange={getMinor}
                   name="level"
-                  className="w-[100%]    p-4 outline-none border-b-2 border-stone-200 space-y-2"
+                  className="w-[100%]    p-4 outline-none border-b-2 border-stone-200 space-y-2  h-[2px]"
                   
                 >
                   <option value="noOption">noOption</option>
@@ -146,7 +147,7 @@ function SelectMinor({toggleHidden,deptFrom}:props):JSX.Element {
                   onClick={getLevelAndLoadCourses}
                   onChange={getLevelAndLoadCourses }
                   name="level"
-                  className="w-[100%]  p-4 outline-none border-b-2 border-stone-200"
+                  className="w-[100%]  p-4 outline-none border-b-2 border-stone-200  h-[2px]"
                 >
                   <option value="noOption">no option</option>
                   <option value="100">100</option>
@@ -193,9 +194,9 @@ function SelectMinor({toggleHidden,deptFrom}:props):JSX.Element {
   
                 <div  className="w-full overflow-auto">
                   <table className=" w-full   border-stone-300 border border-collapse table-auto  ">
-                    <caption>
+                    <caption className="mt-4 md:mt-0">
                       Courses in{" "}
-                      <span className="uppercase">zeco suzuki </span>
+                      <span className="uppercase">{name} </span>
                       &apos;s Minor
                     </caption>
                     <thead>

@@ -43,11 +43,11 @@ async function Home() {
 
   return (
     <>
-      <div className="   px-2 bg-stone-100 md:px-16 md:flex">
-        <div className=" md:p-16  md:-mt-[3rem] bg-white border-[0.7px] border-solid border-stone-300 ">
+      <div className="   px-2 bg-stone-100 md:px-16 md:flex ">
+        <div className=" md:p-16  md:-mt-[3rem] bg-white border-[0.7px] border-solid border-stone-300  ">
           <div
             className=" -mt-[2rem] bg-white md:-mt-[0rem] h-fit   border-[1px] border-solid border-stone-300 
-                    md:grid   md:grid-cols-[20fr,80fr]
+                    md:grid   md:grid-cols-[20fr,80fr] pb-6
                     "
           >
             <div className=" md:flex md:justify-center md:bg-stone-100 pl-[1rem] pr-[1rem]  md:pr-[0rem] pt-[1rem] space-x-2  ">

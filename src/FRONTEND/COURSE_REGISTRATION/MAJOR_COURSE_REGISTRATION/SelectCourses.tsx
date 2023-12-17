@@ -125,7 +125,7 @@ function  SelectCourses( {department,name,toggleHidden,registeredCourses,minor}:
             <select
               onChange={getLevelAndLoadCoures}
               name="level"
-              className=" w-[70%] p-4 outline-none border-b-2 border-stone-200"
+              className=" w-[70%] p-4 outline-none border-b-2 border-stone-200 h-[2px]"
             >
               <option value="noOption">no option</option>
               <option value="100">100</option>
@@ -169,7 +169,7 @@ function  SelectCourses( {department,name,toggleHidden,registeredCourses,minor}:
 
               <div  className="w-full overflow-auto">
                 <table className=" w-full   border-stone-300 border border-collapse table-auto  ">
-                  <caption>
+                  <caption className="mt-4 md:mt-0">
                     Courses in{" "}
                     <span className="uppercase">{name} </span>
                     &apos;s Major

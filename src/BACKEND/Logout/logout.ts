@@ -11,3 +11,4 @@ export async function logout(){
     if(!res.ok ) toast.error("error logging out,please try again")
     
 }
+

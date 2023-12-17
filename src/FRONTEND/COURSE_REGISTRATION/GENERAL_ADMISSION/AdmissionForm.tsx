@@ -161,9 +161,12 @@ const formStyle:string = "flex flex-col  w-full outline-none"
                         >
                            
                             <option value="noOption">No option</option>
-                            {
-                                data?.map(el => <option key={el.id} value={`${el.id}`}>{el.facultyName}</option> )
-                            }
+                            
+                                {/* // data?.map(el => <option key={el.id} value={`${el.id}`}>{el.facultyName}</option> ) */}
+                                <option value="fsZustaland">Faculty of Science</option>
+                                <option value="faZustaland">Faculty of Arts</option>
+                                <option value="fetZustaland">Faculty of Engineering and Technology</option>
+                            
                         </select>
                         </Suspense>
 
@@ -185,9 +188,9 @@ const formStyle:string = "flex flex-col  w-full outline-none"
                             <select  id="fa" className={`${inputStyle} `}  required   {...register("programChosen",{required:true,})} >
                             <option value="eng">B.sc English </option>
                             <option value="hist">B.sc History</option>
-                            <option value="geo">B.sc Geography</option>
+                            {/* <option value="geo">B.sc Geography</option>
                             <option value="fre">B.sc French</option>
-                            <option value="lit">B.sc Literature</option>
+                            <option value="lit">B.sc Literature</option> */}
                             
                         </select>
                         }
@@ -204,10 +207,10 @@ const formStyle:string = "flex flex-col  w-full outline-none"
                       {chosenFaculty === "fsZustaland" &&
                           <select  id="fs" className={`${inputStyle} `} required  {...register("programChosen",{required:true,})} >
                           <option value="csc">B.sc Computer Science</option>
-                          <option value="chem">B.sc Chemistry</option>
-                          <option value="bio">B.sc Biology</option>
                           <option value="phy">B.sc Physics</option>
-                          <option value="env">B.sc Enviromental Science</option>
+                          {/* <option value="chem">B.sc Chemistry</option>
+                          <option value="bio">B.sc Biology</option>
+                          <option value="env">B.sc Enviromental Science</option> */}
                           
                       </select>
                       }
@@ -219,7 +222,7 @@ const formStyle:string = "flex flex-col  w-full outline-none"
 
 
 
-                    <div className={`${formStyle}  ${chosenFaculty === "fedZustaland" ? " ":"hidden"}`}>
+                    {/* <div className={`${formStyle}  ${chosenFaculty === "fedZustaland" ? " ":"hidden"}`}>
                         <label htmlFor="fed">Faculty of Education Programs</label>
     
                         {chosenFaculty === "fedZustaland" && 
@@ -232,7 +235,7 @@ const formStyle:string = "flex flex-col  w-full outline-none"
                         }
 
 
-                    </div>
+                    </div> */}
 
 
 
@@ -242,11 +245,11 @@ const formStyle:string = "flex flex-col  w-full outline-none"
     
                        {chosenFaculty === "fetZustaland" && 
                          <select  id="fet" className={`${inputStyle} `}  required {...register("programChosen",{required:true,})} >
-                         <option value="cengS">B.sc Software Engineering</option>
+                         <option value="cengS">B.sc Computer Engineering</option>
                          <option value="cengM">B.sc Mechanical Engineering</option>
-                         <option value="cengC">B.sc Civil Engineering</option>
+                         {/* <option value="cengC">B.sc Civil Engineering</option>
                          <option value="cengE">B.sc Electrical Engineering</option>
-                         <option value="cengMi">B.sc Minning</option>
+                         <option value="cengMi">B.sc Minning</option> */}
                          
                      </select>
                        }
@@ -255,7 +258,7 @@ const formStyle:string = "flex flex-col  w-full outline-none"
 
 
 
-                    <div className={`${formStyle} ${chosenFaculty === "fhsZustaland" ? "":"hidden"}`}>
+                    {/* <div className={`${formStyle} ${chosenFaculty === "fhsZustaland" ? "":"hidden"}`}>
                         <label htmlFor="fhs">Faculty of Health Sciences Programs</label>
     
                        { chosenFaculty === "fhsZustaland" &&
@@ -268,7 +271,7 @@ const formStyle:string = "flex flex-col  w-full outline-none"
                      </select>
                        }
 
-                    </div>
+                    </div> */}
 
 {/******************************************************************************************************************* ***************/}
 
