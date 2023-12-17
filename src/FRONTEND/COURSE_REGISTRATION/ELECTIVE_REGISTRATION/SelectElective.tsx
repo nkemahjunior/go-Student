@@ -161,7 +161,7 @@ function SelectElective({toggleHidden,deptFrom,name}:props):JSX.Element {
               <p className="  text-sm">
                 Elecive Courses in{" "}
                 <span className=" font-semibold">
-                  computer science
+                  {getCoursesForDepartment[elective]}
                 </span>
               </p>
   

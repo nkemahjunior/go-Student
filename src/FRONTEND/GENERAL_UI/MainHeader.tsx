@@ -84,7 +84,7 @@ function MainHeader({photo,name}:{photo:string| null | undefined,name:string| nu
                                     {loggingOut ? 
                                     <span className="flex items-center"><span className="animate-spin"><ImSpinner8/></span>&nbsp;Logging out</span> 
                                     : 
-                                    <span className="flex items-center"><span ><RiLogoutCircleLine/></span>&nbsp;Logging out</span>
+                                    <span className="flex items-center"><span ><RiLogoutCircleLine/></span>&nbsp;Logout</span>
                                     }
                                 </li>
                             </ul>

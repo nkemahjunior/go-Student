@@ -118,7 +118,7 @@ const formStyle:string = "flex flex-col  w-full outline-none"
                         <label htmlFor="nationality">Nationality</label>
                         <input className={inputStyle} type="text" 
                         {...register("nationality",{
-                            pattern: /^[A-Za-z]+$/i,
+                            // pattern: /^[A-Za-z]+$/i,
                             required:true,
                             maxLength:20,
                             
@@ -128,9 +128,9 @@ const formStyle:string = "flex flex-col  w-full outline-none"
                             { errors.nationality?.type === "required" && (
                                 <p role="alert" className='text-red-500'> nationality is required</p>
                             )}
-                            { errors.nationality?.type === "pattern" && (
+                            {/* { errors.nationality?.type === "pattern" && (
                                 <p role="alert" className='text-red-500'> nationality can include only letters</p>
-                            )}
+                            )} */}
                     </div>
 
                     
